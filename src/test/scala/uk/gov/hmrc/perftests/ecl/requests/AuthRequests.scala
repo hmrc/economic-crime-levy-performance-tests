@@ -25,10 +25,16 @@ import uk.gov.hmrc.perftests.ecl.Configuration
 
 object AuthRequests extends Configuration{
 
-  val authWizardUrl: String        = s"$authUrl/auth-login-stub//gg-sign-in?continue=http%3A%2F%2Flocalhost%3A14000%2Fregister-for-economic-crime-levy%2F"
+  val registerAuthWizardUrl: String        = s"$authUrl/auth-login-stub//gg-sign-in?continue=http%3A%2F%2Flocalhost%3A14000%2Fregister-for-economic-crime-levy%2F"
+  val returnsAuthWizardUrl: String         = s"$authUrl/auth-login-stub//gg-sign-in?continue=http%3A%2F%2Flocalhost%3A14002%2Fsubmit-economic-crime-levy-return%2F"
 
-  val navigateToAuthWizard: HttpRequestBuilder =
-    http("Navigate to Home Page")
-      .get(authWizardUrl)
+  val registerNavigateToAuthWizard: HttpRequestBuilder =
+    http("Navigate to Register AuthWizard Page")
+      .get(registerAuthWizardUrl)
+      .check(status.is(200))
+
+  val returnsNavigateToAuthWizard: HttpRequestBuilder =
+    http("Navigate to Returns AuthWizard Page")
+      .get(returnsAuthWizardUrl)
       .check(status.is(200))
 }

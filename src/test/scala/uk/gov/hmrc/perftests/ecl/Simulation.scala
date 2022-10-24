@@ -22,8 +22,12 @@ import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
 
 class Simulation extends PerformanceTestRunner {
 
-  setup("home-page", "Home Page"
-  ).withRequests(navigateToAuthWizard)
+  setup("ecl-registration-login", "Login via Auth Wizard for Registration"
+  ).withRequests(registerNavigateToAuthWizard)
+
+  setup(
+    "ecl-returns-login", "Log in via Auth Wizard for Returns"
+  ).withRequests(returnsNavigateToAuthWizard)
 
   runSimulation()
 }
