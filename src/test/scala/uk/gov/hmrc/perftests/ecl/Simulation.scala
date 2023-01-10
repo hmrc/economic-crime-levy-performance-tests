@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +18,24 @@ package uk.gov.hmrc.perftests.ecl
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
+import uk.gov.hmrc.perftests.ecl.requests.RegistrationRequests.{selectUkRevenue, selectUkRevenueForm}
 
 
 class Simulation extends PerformanceTestRunner {
 
-  setup("ecl-registration-login", "Login via Auth Wizard for Registration"
-  ).withRequests(registerNavigateToAuthWizard)
+  setup("ecl-registration-login",
+        "Login via Auth Wizard for Registration"
+  ).withRequests(
+    registerNavigateToAuthWizard,
+    navigateToAuthWizardRedirectionUrl,
+    authWizardSubmitForm(),
+    selectUkRevenue,
+    selectUkRevenueForm("true")
+  )
 
-  setup(
-    "ecl-returns-login", "Log in via Auth Wizard for Returns"
-  ).withRequests(returnsNavigateToAuthWizard)
+//  setup(
+//    "ecl-returns-login", "Log in via Auth Wizard for Returns"
+//  ).withRequests(returnsNavigateToAuthWizard)
 
   runSimulation()
 }
