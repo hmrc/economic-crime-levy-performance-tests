@@ -16,11 +16,19 @@
 
 package uk.gov.hmrc.perftests.ecl
 
+import io.gatling.core.Predef._
+import io.gatling.http.Predef._
+import io.gatling.http.check.HttpCheck
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
+trait Configuration extends ServicesConfiguration {
 
+  val registrationUrl: String = baseUrlFor("economic-crime-levy-registration-frontend")
+//  val returnsUrl: String      = baseUrlFor("economic-crime-levy-returns-frontend")
+  val authWizardUrl: String   = baseUrlFor("auth-login-stub") + "/auth-login-stub/gg-sign-in"
 
-trait Configuration extends ServicesConfiguration{
+  private val csrfTokenPattern: String = """<input type="hidden" name="csrfToken"\s+value="([^"]+)""""
 
-  val authUrl: String             = baseUrlFor("auth-login-stub")
+  def saveCsrfToken: HttpCheck =
+    regex(_ => csrfTokenPattern).saveAs("csrfToken")
 }

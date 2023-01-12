@@ -18,16 +18,27 @@ package uk.gov.hmrc.perftests.ecl
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
-
+import uk.gov.hmrc.perftests.ecl.requests.RegistrationRequests._
 
 class Simulation extends PerformanceTestRunner {
 
-  setup("ecl-registration-login", "Login via Auth Wizard for Registration"
-  ).withRequests(registerNavigateToAuthWizard)
+  setup("ecl-registration-login", "Login via Auth Wizard for Registration").withRequests(
+    registerNavigateToAuthWizard,
+    navigateToAuthWizardRedirectionUrl,
+    submitAuthWizardForm(),
+    navigateToSelectUkRevenue,
+    submitSelectUkRevenue("true"),
+    navigateToSelectAmlSupervisor,
+    submitSelectAmlSupervisor("Hmrc"),
+    navigateToSelectEntityType,
+    submitSelectEntityType("UkLimitedCompany"),
+    navigateToStubGrsJourneyData,
+    stubGrsJourneyData("0","X00000000000001"),
+  )
 
-  setup(
-    "ecl-returns-login", "Log in via Auth Wizard for Returns"
-  ).withRequests(returnsNavigateToAuthWizard)
+  //  setup(
+  //    "ecl-returns-login", "Log in via Auth Wizard for Returns"
+  //  ).withRequests(returnsNavigateToAuthWizard)
 
   runSimulation()
 }
