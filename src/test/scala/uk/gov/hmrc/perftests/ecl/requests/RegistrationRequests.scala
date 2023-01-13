@@ -53,7 +53,7 @@ object RegistrationRequests extends Configuration {
       .check(saveCsrfToken)
 
   def submitAmlSupervisor(amlSupervisor: String): HttpRequestBuilder =
-    http("AML Supervisor: " + amlSupervisor)
+    http("Submit AML Supervisor: " + amlSupervisor)
       .post(whoIsYourAmlSupervisorUrl)
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", amlSupervisor)
@@ -67,7 +67,7 @@ object RegistrationRequests extends Configuration {
       .check(saveCsrfToken)
 
   def submitEntityType(entityType: String): HttpRequestBuilder =
-    http("Entity Type: " + entityType)
+    http("Submit Entity Type: " + entityType)
       .post(whatIsYourEntityType)
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", entityType)
@@ -121,7 +121,7 @@ object RegistrationRequests extends Configuration {
       .check(status.is(200))
       .check(saveCsrfToken)
   def submitWhatIsYourBusinessSector(businessSector: String): HttpRequestBuilder =
-    http("Business sector: " + businessSector)
+    http("Submit Business sector: " + businessSector)
       .post(whatIsYourBusinessSectorUrl)
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", businessSector)
