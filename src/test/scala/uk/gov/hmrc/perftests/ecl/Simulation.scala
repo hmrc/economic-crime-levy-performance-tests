@@ -22,18 +22,26 @@ import uk.gov.hmrc.perftests.ecl.requests.RegistrationRequests._
 
 class Simulation extends PerformanceTestRunner {
 
-  setup("ecl-registration-login", "Login via Auth Wizard for Registration").withRequests(
-    registerNavigateToAuthWizard,
+  setup("ecl-registration-login", "Login via Auth Wizard").withRequests(
+    NavigateToRegisterAuthWizard,
     navigateToAuthWizardRedirectionUrl,
     submitAuthWizardForm(),
+  )
+    setup("ecl-registration-journey", "Register for ECL").withActions(
     navigateToSelectUkRevenue,
     submitSelectUkRevenue("true"),
-    navigateToSelectAmlSupervisor,
-    submitSelectAmlSupervisor("Hmrc"),
-    navigateToSelectEntityType,
-    submitSelectEntityType("UkLimitedCompany"),
+    navigateToAmlSupervisor,
+    submitAmlSupervisor("Hmrc"),
+    navigateToEntityType,
+    submitEntityType("UkLimitedCompany"),
     navigateToStubGrsJourneyData,
-    stubGrsJourneyData("0","X00000000000001"),
+    submitStubGrsJourneyData("0","X00000000000001"),
+    navigateToWhetherOrNotAmlActivityStartedInCurrentYear,
+    submitWhetherOrNotAmlActivityStartedInCurrentYear("true"),
+    navigateToAmlActivityStartDate,
+    submitAmlActivityStartDate("10","12","2022"),
+    navigateToWhatIsYourBusinessSector,
+    submitWhatIsYourBusinessSector("CreditInstitution")
   )
 
   //  setup(

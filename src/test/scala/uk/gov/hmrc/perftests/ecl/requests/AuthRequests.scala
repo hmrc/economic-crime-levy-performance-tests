@@ -27,7 +27,7 @@ object AuthRequests extends Configuration {
   val registerAuthWizardUrl: String    = s"$registrationUrl/register-for-the-economic-crime-levy/"
   val authWizardRedirectionUrl: String = s"$registerAuthWizardUrl/what-was-your-uk-revenue"
 
-  val registerNavigateToAuthWizard: HttpRequestBuilder =
+  val NavigateToRegisterAuthWizard: HttpRequestBuilder =
     http("Navigate to Register AuthWizard Page")
       .get(registerAuthWizardUrl)
       .check(status.is(200))

@@ -24,10 +24,14 @@ import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
 
 object RegistrationRequests extends Configuration {
 
-  val whatWasYourUkRevenueUrl: String   = s"$registerAuthWizardUrl/what-was-your-uk-revenue"
-  val whoIsYourAmlSupervisorUrl: String = s"$registerAuthWizardUrl/who-is-your-aml-supervisor"
-  val whatIsYourEntityType: String      = s"$registerAuthWizardUrl/what-is-your-entity-type"
-  val subGrsJourneyDataUrl: String      = s"$registerAuthWizardUrl/test-only/stub-grs-journey-data"
+  val whatWasYourUkRevenueUrl: String         = s"$registerAuthWizardUrl/what-was-your-uk-revenue"
+  val whoIsYourAmlSupervisorUrl: String       = s"$registerAuthWizardUrl/who-is-your-aml-supervisor"
+  val whatIsYourEntityType: String            = s"$registerAuthWizardUrl/what-is-your-entity-type"
+  val subGrsJourneyDataUrl: String            = s"$registerAuthWizardUrl/test-only/stub-grs-journey-data"
+  val didYouStartAmlActivityUrl: String       = s"$registerAuthWizardUrl/did-you-start-aml-activity-in-current-year"
+  val amlActivityStartDateUrl: String         = s"$registerAuthWizardUrl/aml-activity-start-date"
+  val whatIsYourBusinessSectorUrl: String     = s"$registerAuthWizardUrl/what-is-your-business-sector"
+
 
   val navigateToSelectUkRevenue: HttpRequestBuilder =
     http("Navigate to /what-is-your-UK-revenue")
@@ -42,28 +46,28 @@ object RegistrationRequests extends Configuration {
       .formParam("value", answer)
       .check(status.is(303))
 
-  val navigateToSelectAmlSupervisor : HttpRequestBuilder =
+  val navigateToAmlSupervisor : HttpRequestBuilder =
     http("Navigate to /who-is-your-aml-supervisor")
       .get(whoIsYourAmlSupervisorUrl)
       .check(status.is(200))
       .check(saveCsrfToken)
 
-  def submitSelectAmlSupervisor(amlSupervisor: String): HttpRequestBuilder =
-    http("Select AML Supervisor")
+  def submitAmlSupervisor(amlSupervisor: String): HttpRequestBuilder =
+    http("AML Supervisor: " + amlSupervisor)
       .post(whoIsYourAmlSupervisorUrl)
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", amlSupervisor)
       .formParam("otherProfessionalBody", "")
       .check(status.is(303))
 
-  val navigateToSelectEntityType: HttpRequestBuilder =
+  val navigateToEntityType: HttpRequestBuilder =
     http("Navigate to /what-is-your-entity-type")
       .get(whatIsYourEntityType)
       .check(status.is(200))
       .check(saveCsrfToken)
 
-  def submitSelectEntityType(entityType: String): HttpRequestBuilder =
-    http("Select Entity Type")
+  def submitEntityType(entityType: String): HttpRequestBuilder =
+    http("Entity Type: " + entityType)
       .post(whatIsYourEntityType)
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", entityType)
@@ -75,11 +79,51 @@ object RegistrationRequests extends Configuration {
       .check(status.is(200))
       .check(saveCsrfToken)
 
-  def stubGrsJourneyData(journeyId: String, businessPartnerId: String): HttpRequestBuilder =
-  http("Stub GRS Journey Data")
-    .post(subGrsJourneyDataUrl)
-    .formParam("csrfToken", "${csrfToken}")
-    .formParam("value", journeyId)
-    .formParam("value", businessPartnerId)
-    .check(status.is(400))
+  def submitStubGrsJourneyData(journeyId: String, businessPartnerId: String): HttpRequestBuilder =
+    http("Stub GRS Journey Data")
+      .post(subGrsJourneyDataUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("journeyId", journeyId)
+      .formParam("businessPartnerId", businessPartnerId)
+      .check(status.is(303))
+
+  val navigateToWhetherOrNotAmlActivityStartedInCurrentYear: HttpRequestBuilder =
+    http("Navigate to /test-only/stub-grs-journey-data")
+      .get(didYouStartAmlActivityUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+
+  def submitWhetherOrNotAmlActivityStartedInCurrentYear(answer: String): HttpRequestBuilder =
+    http("Did you start AML activity in current FY" + answer)
+      .post(didYouStartAmlActivityUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value", answer)
+      .check(status.is(303))
+
+  val navigateToAmlActivityStartDate: HttpRequestBuilder =
+    http("Navigate to /test-only/stub-grs-journey-data")
+      .get(amlActivityStartDateUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+
+  def submitAmlActivityStartDate(day: String, month: String, year: String): HttpRequestBuilder =
+    http("AML activity start date " + day + "/" + month + "/" + year)
+      .post(amlActivityStartDateUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value.day", day)
+      .formParam("value.month", month)
+      .formParam("value.year", year)
+      .check(status.is(303))
+
+  val navigateToWhatIsYourBusinessSector: HttpRequestBuilder =
+    http("Navigate to /test-only/stub-grs-journey-data")
+      .get(whatIsYourBusinessSectorUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+  def submitWhatIsYourBusinessSector(businessSector: String): HttpRequestBuilder =
+    http("Business sector: " + businessSector)
+      .post(whatIsYourBusinessSectorUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value", businessSector)
+      .check(status.is(303))
 }
