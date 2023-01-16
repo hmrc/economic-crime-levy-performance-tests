@@ -24,24 +24,26 @@ import uk.gov.hmrc.perftests.ecl.Configuration
 
 object AuthRequests extends Configuration {
 
-  val registerAuthWizardUrl: String    = s"$registrationUrl/register-for-the-economic-crime-levy/"
-  val authWizardRedirectionUrl: String = s"$registerAuthWizardUrl/what-was-your-uk-revenue"
+  val registerAuthWizardUrl: String               = s"$registrationUrl/register-for-the-economic-crime-levy/"
+  val authWizardRegisterRedirectionUrl: String    = s"$registerAuthWizardUrl/what-was-your-uk-revenue"
+  val returnAuthWizardUrl: String                 = s"$returnsUrl/submit-economic-crime-levy-return/"
 
-  val NavigateToRegisterAuthWizard: HttpRequestBuilder =
+
+  val navigateToRegisterAuthWizard: HttpRequestBuilder =
     http("Navigate to Register AuthWizard Page")
       .get(registerAuthWizardUrl)
       .check(status.is(200))
 
   val navigateToAuthWizardRedirectionUrl: HttpRequestBuilder =
     http("Navigate to auth wizard redirection url")
-      .get(authWizardRedirectionUrl)
+      .get(authWizardRegisterRedirectionUrl)
       .check(status.is(303))
-  def submitAuthWizardForm(): HttpRequestBuilder             =
+  def submitRegisterAuthWizardForm(): HttpRequestBuilder             =
     http("Log in with redirection url")
       .post(authWizardUrl)
       .formParam("authorityId", "")
       .formParam("gatewayToken", "")
-      .formParam("redirectionUrl", authWizardRedirectionUrl)
+      .formParam("redirectionUrl", authWizardRegisterRedirectionUrl)
       .formParam("credentialStrength", "strong")
       .formParam("confidenceLevel", "50")
       .formParam("affinityGroup", "Individual")
@@ -66,5 +68,45 @@ object AuthRequests extends Configuration {
       .formParam("enrolment[3].taxIdentifier[0].value", "")
       .formParam("enrolment[3].state", "Activated")
       .check(status.is(303))
-      .check(header("Location").is(authWizardRedirectionUrl))
+      .check(header("Location").is(authWizardRegisterRedirectionUrl))
+
+  val navigateToReturnAuthWizard: HttpRequestBuilder =
+    http("Navigate to auth wizard return redirection url")
+      .get(returnAuthWizardUrl)
+      .check(status.is(303))
+
+  def submitReturnsAuthWizardForm(enrolmentKey: String = "HMRC-ECL-ORG", identifierName: String = "EclRegistrationReference", identifierValue: String = "XMECL0000000001" ): HttpRequestBuilder =
+    http("Log in with redirection url")
+      .post(authWizardUrl)
+      .formParam("authorityId", "")
+      .formParam("gatewayToken", "")
+      .formParam("redirectionUrl", returnAuthWizardUrl)
+      .formParam("credentialStrength", "strong")
+      .formParam("confidenceLevel", "50")
+      .formParam("affinityGroup", "Individual")
+      .formParam("email", "user@test.com")
+      .formParam("credentialRole", "User")
+      .formParam("oauthTokens.accessToken", "")
+      .formParam("oauthTokens.refreshToken", "")
+      .formParam("oauthTokens.idToken", "")
+      .formParam("additionalInfo.emailVerified", "N/A")
+      .formParam("presets-dropdown", "IR-SA")
+      .formParam("enrolment[0].name", enrolmentKey)
+      .formParam("enrolment[0].taxIdentifier[0].name", identifierName)
+      .formParam("enrolment[0].taxIdentifier[0].value", identifierValue)
+      .formParam("enrolment[0].state", "Activated")
+      .formParam("enrolment[1].name", "")
+      .formParam("enrolment[1].taxIdentifier[0].name", "")
+      .formParam("enrolment[1].taxIdentifier[0].value", "")
+      .formParam("enrolment[1].state", "Activated")
+      .formParam("enrolment[2].name", "")
+      .formParam("enrolment[2].taxIdentifier[0].name", "")
+      .formParam("enrolment[2].taxIdentifier[0].value", "")
+      .formParam("enrolment[2].state", "Activated")
+      .formParam("enrolment[3].name", "")
+      .formParam("enrolment[3].taxIdentifier[0].name", "")
+      .formParam("enrolment[3].taxIdentifier[0].value", "")
+      .formParam("enrolment[3].state", "Activated")
+      .check(status.is(303))
+      .check(header("Location").is(returnAuthWizardUrl))
 }

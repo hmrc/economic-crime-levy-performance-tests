@@ -22,10 +22,10 @@ import uk.gov.hmrc.perftests.ecl.requests.RegistrationRequests._
 
 class Simulation extends PerformanceTestRunner {
 
-  setup("ecl-registration-login", "Login via Auth Wizard").withRequests(
-    NavigateToRegisterAuthWizard,
+  setup("ecl-registration-login", "Login via Auth Wizard for registration").withRequests(
+    navigateToRegisterAuthWizard,
     navigateToAuthWizardRedirectionUrl,
-    submitAuthWizardForm(),
+    submitRegisterAuthWizardForm(),
   )
     setup("ecl-registration-journey", "Register for ECL").withActions(
     navigateToSelectUkRevenue,
@@ -44,9 +44,11 @@ class Simulation extends PerformanceTestRunner {
     submitWhatIsYourBusinessSector("CreditInstitution")
   )
 
-  //  setup(
-  //    "ecl-returns-login", "Log in via Auth Wizard for Returns"
-  //  ).withRequests(returnsNavigateToAuthWizard)
+    setup(
+      "ecl-returns-login", "Log in via Auth Wizard for returns").withRequests(
+      navigateToReturnAuthWizard,
+      submitReturnsAuthWizardForm(),
+    )
 
   runSimulation()
 }
