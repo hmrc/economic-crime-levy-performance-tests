@@ -24,10 +24,9 @@ import uk.gov.hmrc.perftests.ecl.Configuration
 
 object AuthRequests extends Configuration {
 
-  val registerAuthWizardUrl: String               = s"$registrationUrl/register-for-the-economic-crime-levy/"
-  val authWizardRegisterRedirectionUrl: String    = s"$registerAuthWizardUrl/what-was-your-uk-revenue"
-  val returnAuthWizardUrl: String                 = s"$returnsUrl/submit-economic-crime-levy-return/"
-
+  val registerAuthWizardUrl: String            = s"$registrationUrl/register-for-the-economic-crime-levy/"
+  val authWizardRegisterRedirectionUrl: String = s"$registerAuthWizardUrl/did-you-carry-out-aml-regulated-activity"
+  val returnAuthWizardUrl: String              = s"$returnsUrl/submit-economic-crime-levy-return/"
 
   val navigateToRegisterAuthWizard: HttpRequestBuilder =
     http("Navigate to Register AuthWizard Page")
@@ -38,7 +37,7 @@ object AuthRequests extends Configuration {
     http("Navigate to auth wizard redirection url")
       .get(authWizardRegisterRedirectionUrl)
       .check(status.is(303))
-  def submitRegisterAuthWizardForm(): HttpRequestBuilder             =
+  def submitRegisterAuthWizardForm(): HttpRequestBuilder     =
     http("Log in with redirection url")
       .post(authWizardUrl)
       .formParam("authorityId", "")
@@ -75,7 +74,11 @@ object AuthRequests extends Configuration {
       .get(returnAuthWizardUrl)
       .check(status.is(303))
 
-  def submitReturnsAuthWizardForm(enrolmentKey: String = "HMRC-ECL-ORG", identifierName: String = "EclRegistrationReference", identifierValue: String = "XMECL0000000001" ): HttpRequestBuilder =
+  def submitReturnsAuthWizardForm(
+    enrolmentKey: String = "HMRC-ECL-ORG",
+    identifierName: String = "EclRegistrationReference",
+    identifierValue: String = "XMECL0000000001"
+  ): HttpRequestBuilder =
     http("Log in with redirection url")
       .post(authWizardUrl)
       .formParam("authorityId", "")
