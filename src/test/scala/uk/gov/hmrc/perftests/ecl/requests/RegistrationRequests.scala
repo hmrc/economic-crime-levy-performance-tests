@@ -24,29 +24,38 @@ import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
 
 object RegistrationRequests extends Configuration {
 
-  val whatWasYourUkRevenueUrl: String         = s"$registerAuthWizardUrl/what-was-your-uk-revenue"
-  val whoIsYourAmlSupervisorUrl: String       = s"$registerAuthWizardUrl/who-is-your-aml-supervisor"
-  val whatIsYourEntityType: String            = s"$registerAuthWizardUrl/what-is-your-entity-type"
-  val subGrsJourneyDataUrl: String            = s"$registerAuthWizardUrl/test-only/stub-grs-journey-data"
-  val didYouStartAmlActivityUrl: String       = s"$registerAuthWizardUrl/did-you-start-aml-activity-in-current-year"
-  val amlActivityStartDateUrl: String         = s"$registerAuthWizardUrl/aml-activity-start-date"
-  val whatIsYourBusinessSectorUrl: String     = s"$registerAuthWizardUrl/what-is-your-business-sector"
+  val amlRegulatedActivityUrl: String            = s"$registerAuthWizardUrl/did-you-carry-out-aml-regulated-activity"
+  val whoIsYourAmlSupervisorUrl: String          = s"$registerAuthWizardUrl/who-is-your-aml-supervisor"
+  val relevantAccountingPeriodUrl: String        = s"$registerAuthWizardUrl/is-relevant-accounting-period-12-months"
+  val ukRevenueForAccountingPeriodUrl: String    = s"$registerAuthWizardUrl/uk-revenue-for-accounting-period"
+  val whatIsYourEntityType: String               = s"$registerAuthWizardUrl/what-is-your-entity-type"
+  val subGrsJourneyDataUrl: String               = s"$registerAuthWizardUrl/test-only/stub-grs-journey-data"
+  val whatIsYourBusinessSectorUrl: String        = s"$registerAuthWizardUrl/what-is-your-business-sector"
+  val firstContactPersonNameUrl: String          = s"$registerAuthWizardUrl/contact-name"
+  val firstContactPersonRoleUrl: String          = s"$registerAuthWizardUrl/contact-role"
+  val firstContactPersonEmailUrl: String         = s"$registerAuthWizardUrl/contact-email-address"
+  val firstContactPersonTelephoneUrl: String     = s"$registerAuthWizardUrl/contact-telephone"
+  val wouldYouLikeToAddAnotherContactUrl: String = s"$registerAuthWizardUrl/second-contact"
+  val secondContactPersonNameUrl: String         = s"$registerAuthWizardUrl/second-contact-name"
+  val secondContactPersonRoleUrl: String         = s"$registerAuthWizardUrl/second-contact-role"
+  val secondContactPersonEmailUrl: String        = s"$registerAuthWizardUrl/second-contact-email-address"
+  val secondContactPersonTelephoneUrl: String    = s"$registerAuthWizardUrl/second-contact-telephone"
+  val registeredContactAddressUrl: String        = s"$registerAuthWizardUrl/contact-address"
 
-
-  val navigateToSelectUkRevenue: HttpRequestBuilder =
-    http("Navigate to /what-is-your-UK-revenue")
-      .get(whatWasYourUkRevenueUrl)
+  val navigateToWhetherOrNotAmlActivityStartedInCurrentYear: HttpRequestBuilder =
+    http("Navigate to /did-you-carry-out-aml-regulated-activity")
+      .get(amlRegulatedActivityUrl)
       .check(status.is(200))
       .check(saveCsrfToken)
 
-  def submitSelectUkRevenue(answer: String): HttpRequestBuilder =
-    http("Select UK Revenue")
-      .post(whatWasYourUkRevenueUrl)
+  def submitWhetherOrNotAmlActivityStartedInCurrentYear(answer: String): HttpRequestBuilder =
+    http("Did you carry out AML regulated activity" + answer)
+      .post(amlRegulatedActivityUrl)
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", answer)
       .check(status.is(303))
 
-  val navigateToAmlSupervisor : HttpRequestBuilder =
+  val navigateToAmlSupervisor: HttpRequestBuilder =
     http("Navigate to /who-is-your-aml-supervisor")
       .get(whoIsYourAmlSupervisorUrl)
       .check(status.is(200))
@@ -58,6 +67,32 @@ object RegistrationRequests extends Configuration {
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", amlSupervisor)
       .formParam("otherProfessionalBody", "")
+      .check(status.is(303))
+
+  val navigateToRelevantAccountingPeriod: HttpRequestBuilder =
+    http("Navigate to /is-relevant-accounting-period-12-months")
+      .get(relevantAccountingPeriodUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+
+  def submitRelevantAccountingPeriod(answer: String): HttpRequestBuilder =
+    http("Submit relevant accounting period: " + answer)
+      .post(relevantAccountingPeriodUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value", answer)
+      .check(status.is(303))
+
+  val navigateToUkRevenueForAccountingPeriod: HttpRequestBuilder =
+    http("Navigate to /uk-revenue-for-accounting-period")
+      .get(ukRevenueForAccountingPeriodUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+
+  def submitUkRevenueForAccountingPeriod(ukRevenue: String): HttpRequestBuilder =
+    http("Submit UK Revenue for relevant accounting period: " + ukRevenue)
+      .post(ukRevenueForAccountingPeriodUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value", ukRevenue)
       .check(status.is(303))
 
   val navigateToEntityType: HttpRequestBuilder =
@@ -87,43 +122,145 @@ object RegistrationRequests extends Configuration {
       .formParam("businessPartnerId", businessPartnerId)
       .check(status.is(303))
 
-  val navigateToWhetherOrNotAmlActivityStartedInCurrentYear: HttpRequestBuilder =
-    http("Navigate to /test-only/stub-grs-journey-data")
-      .get(didYouStartAmlActivityUrl)
-      .check(status.is(200))
-      .check(saveCsrfToken)
-
-  def submitWhetherOrNotAmlActivityStartedInCurrentYear(answer: String): HttpRequestBuilder =
-    http("Did you start AML activity in current FY" + answer)
-      .post(didYouStartAmlActivityUrl)
-      .formParam("csrfToken", "${csrfToken}")
-      .formParam("value", answer)
-      .check(status.is(303))
-
-  val navigateToAmlActivityStartDate: HttpRequestBuilder =
-    http("Navigate to /test-only/stub-grs-journey-data")
-      .get(amlActivityStartDateUrl)
-      .check(status.is(200))
-      .check(saveCsrfToken)
-
-  def submitAmlActivityStartDate(day: String, month: String, year: String): HttpRequestBuilder =
-    http("AML activity start date " + day + "/" + month + "/" + year)
-      .post(amlActivityStartDateUrl)
-      .formParam("csrfToken", "${csrfToken}")
-      .formParam("value.day", day)
-      .formParam("value.month", month)
-      .formParam("value.year", year)
-      .check(status.is(303))
-
   val navigateToWhatIsYourBusinessSector: HttpRequestBuilder =
-    http("Navigate to /test-only/stub-grs-journey-data")
+    http("Navigate to /what-is-your-business-sector")
       .get(whatIsYourBusinessSectorUrl)
       .check(status.is(200))
       .check(saveCsrfToken)
+
   def submitWhatIsYourBusinessSector(businessSector: String): HttpRequestBuilder =
     http("Submit Business sector: " + businessSector)
       .post(whatIsYourBusinessSectorUrl)
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", businessSector)
+      .check(status.is(303))
+
+  val navigateToFirstContactPersonName: HttpRequestBuilder =
+    http("Navigate to /contact-name")
+      .get(firstContactPersonNameUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+
+  def submitFirstContactPersonName(contactName: String): HttpRequestBuilder =
+    http("Submit contact person's Name: " + contactName)
+      .post(firstContactPersonNameUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value", contactName)
+      .check(status.is(303))
+
+  val navigateToFirstContactPersonRole: HttpRequestBuilder =
+    http("Navigate to /contact-role")
+      .get(firstContactPersonRoleUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+
+  def submitFirstContactPersonRole(contactRole: String): HttpRequestBuilder =
+    http("Submit contact person's Role: " + contactRole)
+      .post(firstContactPersonRoleUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value", contactRole)
+      .check(status.is(303))
+
+  val navigateToFirstContactPersonEmail: HttpRequestBuilder =
+    http("Navigate to /contact-email-address")
+      .get(firstContactPersonEmailUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+
+  def submitFirstContactPersonEmail(emailAddress: String): HttpRequestBuilder =
+    http("Submit contact person's Email address: " + emailAddress)
+      .post(firstContactPersonEmailUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value", emailAddress)
+      .check(status.is(303))
+
+  val navigateToFirstContactPersonTelephone: HttpRequestBuilder =
+    http("Navigate to /contact-Telephone")
+      .get(firstContactPersonTelephoneUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+
+  def submitFirstContactPersonTelephone(contactNumber: String): HttpRequestBuilder =
+    http("Submit contact person's Telephone: " + contactNumber)
+      .post(firstContactPersonTelephoneUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value", contactNumber)
+      .check(status.is(303))
+
+  val navigateToWouldYouLikeToAddAnotherContact: HttpRequestBuilder             =
+    http("Navigate to /second-contact")
+      .get(wouldYouLikeToAddAnotherContactUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+  def submitWouldYouLikeToAddAnotherContact(answer: String): HttpRequestBuilder =
+    http("Submit add another contact: " + answer)
+      .post(wouldYouLikeToAddAnotherContactUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value", answer)
+      .check(status.is(303))
+
+  val navigateToSecondContactPersonName: HttpRequestBuilder =
+    http("Navigate to /second-contact-name")
+      .get(secondContactPersonNameUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+
+  def submitSecondContactPersonName(contactName: String): HttpRequestBuilder =
+    http("Submit second contact person's Name: " + contactName)
+      .post(secondContactPersonNameUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value", contactName)
+      .check(status.is(303))
+
+  val navigateToSecondContactPersonRole: HttpRequestBuilder =
+    http("Navigate to /second-contact-role")
+      .get(secondContactPersonRoleUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+
+  def submitSecondContactPersonRole(contactRole: String): HttpRequestBuilder =
+    http("Submit second contact person's Role: " + contactRole)
+      .post(secondContactPersonRoleUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value", contactRole)
+      .check(status.is(303))
+
+  val navigateToSecondContactPersonEmail: HttpRequestBuilder =
+    http("Navigate to /second-contact-email-address")
+      .get(secondContactPersonEmailUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+
+  def submitSecondContactPersonEmail(emailAddress: String): HttpRequestBuilder =
+    http("Submit second contact person's Email address: " + emailAddress)
+      .post(secondContactPersonEmailUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value", emailAddress)
+      .check(status.is(303))
+
+  val navigateToSecondContactPersonTelephone: HttpRequestBuilder =
+    http("Navigate to /second-contact-Telephone")
+      .get(secondContactPersonTelephoneUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+
+  def submitSecondContactPersonTelephone(contactNumber: String): HttpRequestBuilder =
+    http("Submit second contact person's Telephone: " + contactNumber)
+      .post(secondContactPersonTelephoneUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value", contactNumber)
+      .check(status.is(303))
+
+  val navigateToRegisteredContactAddress: HttpRequestBuilder =
+    http("Navigate to /contact-address")
+      .get(secondContactPersonTelephoneUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+
+  def submitRegisteredContactAddress(answer: String): HttpRequestBuilder =
+    http("Submit registered contact address: " + answer)
+      .post(registeredContactAddressUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value", answer)
       .check(status.is(303))
 }
