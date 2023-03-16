@@ -24,7 +24,7 @@ import uk.gov.hmrc.perftests.ecl.Configuration
 
 object AuthRequests extends Configuration {
 
-  val registerAuthWizardUrl: String            = s"$registrationUrl/register-for-the-economic-crime-levy/"
+  val registerAuthWizardUrl: String            = s"$registrationUrl/register-for-economic-crime-levy/"
   val authWizardRegisterRedirectionUrl: String = s"$registerAuthWizardUrl/did-you-carry-out-aml-regulated-activity"
   val returnAuthWizardUrl: String              = s"$returnsUrl/submit-economic-crime-levy-return/"
 

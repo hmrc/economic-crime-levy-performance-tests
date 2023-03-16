@@ -75,7 +75,20 @@ class Simulation extends PerformanceTestRunner {
     submitIsYourRelevantAccountingPeriod12Months("true"),
     navigateToUkRevenueAccountingPeriod,
     submitUkRevenueForTheRelevantAccountingPeriod("10200000"),
-    navigateToAmlRegulatedActivity
+    navigateToAmlRegulatedActivity,
+    submitAmlRegulatedActivity("true"),
+    navigateToAmountDue,
+    submitAmountDue,
+    navigateToContactName,
+    submitContactName("James V"),
+    navigateToContactRole,
+    submitContactRole("Account Officer"),
+    navigateToContactEmailAddress,
+    submitContactEmailAddress("test@oc.com"),
+    navigateToContactTelephone,
+    submitContactTelephone("01475344272"),
+    navigateToCheckYourAnswers,
+    submitCheckYourAnswersForReturns,
 
   )
   runSimulation()
