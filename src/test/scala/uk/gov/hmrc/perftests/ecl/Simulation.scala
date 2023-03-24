@@ -19,6 +19,7 @@ package uk.gov.hmrc.perftests.ecl
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
 import uk.gov.hmrc.perftests.ecl.requests.RegistrationRequests._
+import uk.gov.hmrc.perftests.ecl.requests.ReturnsRequests._
 
 class Simulation extends PerformanceTestRunner {
 
@@ -39,7 +40,7 @@ class Simulation extends PerformanceTestRunner {
     navigateToEntityType,
     submitEntityType("UkLimitedCompany"),
     navigateToStubGrsJourneyData,
-    submitStubGrsJourneyData("0", "X00000000000001"),
+    submitStubGrsJourneyData(),
     navigateToFirstContactPersonName,
     submitFirstContactPersonName("Jim"),
     navigateToFirstContactPersonRole,
@@ -59,12 +60,36 @@ class Simulation extends PerformanceTestRunner {
     navigateToSecondContactPersonTelephone,
     submitSecondContactPersonTelephone("0175344171"),
     navigateToRegisteredContactAddress,
-    submitRegisteredContactAddress("true")
+    submitRegisteredContactAddress("true"),
+    navigateToSubmitCheckYourAnswers,
+    submitCheckYourAnswers(),
+    navigateToRegistrationSubmitted,
+
   )
   setup("ecl-returns-login", "Log in via Auth Wizard for returns").withRequests(
     navigateToReturnAuthWizard,
     submitReturnsAuthWizardForm()
   )
+  setup("ecl-returns-journey", "ECL Returns").withActions(
+    navigateToIsRelevantAccountingPeriod12MonthsUrl,
+    submitIsYourRelevantAccountingPeriod12Months("true"),
+    navigateToUkRevenueAccountingPeriod,
+    submitUkRevenueForTheRelevantAccountingPeriod("10200000"),
+    navigateToAmlRegulatedActivity,
+    submitAmlRegulatedActivity("true"),
+    navigateToAmountDue,
+    submitAmountDue,
+    navigateToContactName,
+    submitContactName("James V"),
+    navigateToContactRole,
+    submitContactRole("Account Officer"),
+    navigateToContactEmailAddress,
+    submitContactEmailAddress("test@oc.com"),
+    navigateToContactTelephone,
+    submitContactTelephone("01475344272"),
+    navigateToCheckYourAnswers,
+    submitCheckYourAnswersForReturns,
 
+  )
   runSimulation()
 }

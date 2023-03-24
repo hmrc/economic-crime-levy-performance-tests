@@ -29,7 +29,7 @@ object RegistrationRequests extends Configuration {
   val relevantAccountingPeriodUrl: String        = s"$registerAuthWizardUrl/is-relevant-accounting-period-12-months"
   val ukRevenueForAccountingPeriodUrl: String    = s"$registerAuthWizardUrl/uk-revenue-for-accounting-period"
   val whatIsYourEntityType: String               = s"$registerAuthWizardUrl/what-is-your-entity-type"
-  val subGrsJourneyDataUrl: String               = s"$registerAuthWizardUrl/test-only/stub-grs-journey-data"
+  val subGrsJourneyDataUrl: String               = s"$registerAuthWizardUrl/test-only/stub-grs-journey-data?continueUrl=normalmode&entityType=UkLimitedCompany"
   val whatIsYourBusinessSectorUrl: String        = s"$registerAuthWizardUrl/what-is-your-business-sector"
   val firstContactPersonNameUrl: String          = s"$registerAuthWizardUrl/contact-name"
   val firstContactPersonRoleUrl: String          = s"$registerAuthWizardUrl/contact-role"
@@ -41,6 +41,8 @@ object RegistrationRequests extends Configuration {
   val secondContactPersonEmailUrl: String        = s"$registerAuthWizardUrl/second-contact-email-address"
   val secondContactPersonTelephoneUrl: String    = s"$registerAuthWizardUrl/second-contact-telephone"
   val registeredContactAddressUrl: String        = s"$registerAuthWizardUrl/contact-address"
+  val submitCheckYourAnswersUrl: String          = s"$registerAuthWizardUrl/check-your-answers"
+  val registrationSubmittedUrl: String          = s"$registerAuthWizardUrl/registration-submitted"
 
   val navigateToWhetherOrNotAmlActivityStartedInCurrentYear: HttpRequestBuilder =
     http("Navigate to /did-you-carry-out-aml-regulated-activity")
@@ -114,12 +116,32 @@ object RegistrationRequests extends Configuration {
       .check(status.is(200))
       .check(saveCsrfToken)
 
-  def submitStubGrsJourneyData(journeyId: String, businessPartnerId: String): HttpRequestBuilder =
+  def submitStubGrsJourneyData(): HttpRequestBuilder =
     http("Stub GRS Journey Data")
       .post(subGrsJourneyDataUrl)
       .formParam("csrfToken", "${csrfToken}")
-      .formParam("journeyId", journeyId)
-      .formParam("businessPartnerId", businessPartnerId)
+      .formParam("grsJourneyDataJson",
+        """{
+            "companyProfile" : {
+              "companyName" : "Test Company Name",
+              "companyNumber" : "01234567",
+              "dateOfIncorporation" : 1196676930000,
+              "unsanitisedCHROAddress" : {
+                "address_line_1" : "Test Address Line 1",
+                "address_line_2" : "Test Address Line 2",
+                "country" : "United Kingdom",
+                "locality" : "Test Town",
+                "postal_code" : "AB1 2CD",
+                "region" : "Test Region"
+              }
+            },
+            "ctutr" : "1234567890",
+            "identifiersMatch" : true,
+            "registration" : {
+              "registrationStatus" : "REGISTERED",
+              "registeredBusinessPartnerId" : "X00000000000001"
+            }
+          }""")
       .check(status.is(303))
 
   val navigateToWhatIsYourBusinessSector: HttpRequestBuilder =
@@ -253,7 +275,7 @@ object RegistrationRequests extends Configuration {
 
   val navigateToRegisteredContactAddress: HttpRequestBuilder =
     http("Navigate to /contact-address")
-      .get(secondContactPersonTelephoneUrl)
+      .get(registeredContactAddressUrl)
       .check(status.is(200))
       .check(saveCsrfToken)
 
@@ -263,4 +285,23 @@ object RegistrationRequests extends Configuration {
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", answer)
       .check(status.is(303))
+
+  val navigateToSubmitCheckYourAnswers: HttpRequestBuilder =
+    http("Navigate to /check-your-answers")
+      .get(submitCheckYourAnswersUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+
+  def submitCheckYourAnswers(): HttpRequestBuilder =
+    http("Submit check your answers")
+      .post(submitCheckYourAnswersUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .check(status.is(303))
+
+    val navigateToRegistrationSubmitted: HttpRequestBuilder =
+      http("Navigate to /registration-submitted")
+        .get(registrationSubmittedUrl)
+        .check(status.is(200))
+        .check(saveCsrfToken)
+
 }
