@@ -27,7 +27,7 @@ trait Configuration extends ServicesConfiguration {
   val returnsUrl: String      = baseUrlFor("economic-crime-levy-returns-frontend")
   val authWizardUrl: String   = baseUrlFor("auth-login-stub") + "/auth-login-stub/gg-sign-in"
 
-  private val csrfTokenPattern: String = """<input type="hidden" name="csrfToken"\s+value="([^"]+)""""
+  private val csrfTokenPattern: String    = """<input type="hidden" name="csrfToken"\s+value="([^"]+)""""
   private val grsJourneyIdPattern: String = """.*journeyId=(.*)"""
 
   def saveCsrfToken: HttpCheck =

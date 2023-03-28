@@ -22,18 +22,17 @@ import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.perftests.ecl.Configuration
 import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
 
-
-object ReturnsRequests extends Configuration{
+object ReturnsRequests extends Configuration {
 
   val isRelevantAccountingPeriod12MonthsUrl: String = s"$returnAuthWizardUrl/is-relevant-accounting-period-12-months"
-  val ukRevenueInAccountingPeriodUrl: String = s"$returnAuthWizardUrl/uk-revenue-in-accounting-period"
-  val amlRegulatedActivityUrl: String = s"$returnAuthWizardUrl/aml-regulated-activity"
-  val amountDueUrl: String = s"$returnAuthWizardUrl/amount-due"
-  val contactNameUrl: String = s"$returnAuthWizardUrl/contact-name"
-  val contactRoleUrl: String = s"$returnAuthWizardUrl/contact-role"
-  val contactEmailUrl: String = s"$returnAuthWizardUrl/contact-email-address"
-  val contactTelephoneUrl: String = s"$returnAuthWizardUrl/contact-telephone"
-  val checkYourAnswersUrl: String = s"$returnAuthWizardUrl/check-your-answers"
+  val ukRevenueInAccountingPeriodUrl: String        = s"$returnAuthWizardUrl/uk-revenue-in-accounting-period"
+  val amlRegulatedActivityUrl: String               = s"$returnAuthWizardUrl/aml-regulated-activity"
+  val amountDueUrl: String                          = s"$returnAuthWizardUrl/amount-due"
+  val contactNameUrl: String                        = s"$returnAuthWizardUrl/contact-name"
+  val contactRoleUrl: String                        = s"$returnAuthWizardUrl/contact-role"
+  val contactEmailUrl: String                       = s"$returnAuthWizardUrl/contact-email-address"
+  val contactTelephoneUrl: String                   = s"$returnAuthWizardUrl/contact-telephone"
+  val checkYourAnswersUrl: String                   = s"$returnAuthWizardUrl/check-your-answers"
 
   val navigateToIsRelevantAccountingPeriod12MonthsUrl: HttpRequestBuilder =
     http("Navigate to Is relevant Accounting period 12 months")
@@ -61,7 +60,7 @@ object ReturnsRequests extends Configuration{
       .formParam("value", ukRevenue)
       .check(status.is(303))
 
-  val navigateToAmlRegulatedActivity: HttpRequestBuilder =
+  val navigateToAmlRegulatedActivity: HttpRequestBuilder             =
     http("Navigate to AML regulated activity")
       .get(amlRegulatedActivityUrl)
       .check(status.is(200))

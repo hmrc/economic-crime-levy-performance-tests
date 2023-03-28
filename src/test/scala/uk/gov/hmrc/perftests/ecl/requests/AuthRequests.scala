@@ -37,7 +37,8 @@ object AuthRequests extends Configuration {
     http("Navigate to auth wizard redirection url")
       .get(authWizardRegisterRedirectionUrl)
       .check(status.is(303))
-  def submitRegisterAuthWizardForm(): HttpRequestBuilder     =
+
+  def submitRegisterAuthWizardForm(): HttpRequestBuilder =
     http("Log in with redirection url")
       .post(authWizardUrl)
       .formParam("authorityId", "")
