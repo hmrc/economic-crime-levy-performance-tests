@@ -143,6 +143,9 @@ object RegistrationRequests extends Configuration {
             }
           }""")
       .check(status.is(303))
+//      .check(headerRegex("Location","/register-for-economic-crime-levy/grs-continue/normalmode?journeyId=(.*)").saveAs("GRS data"))
+        .check(saveGrsJourneyId)
+//      .check(header("Location").saveAs("GRS"))
 
   val navigateToWhatIsYourBusinessSector: HttpRequestBuilder =
     http("Navigate to /what-is-your-business-sector")
