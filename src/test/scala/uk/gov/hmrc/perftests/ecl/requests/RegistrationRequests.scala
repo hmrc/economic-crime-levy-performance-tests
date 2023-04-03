@@ -135,7 +135,7 @@ object RegistrationRequests extends Configuration {
             "companyProfile" : {
               "companyName" : "Test Company Name",
               "companyNumber" : "01234567",
-              "dateOfIncorporation" : 1196676930000,
+              "dateOfIncorporation" : "2007-12-03",
               "unsanitisedCHROAddress" : {
                 "address_line_1" : "Test Address Line 1",
                 "address_line_2" : "Test Address Line 2",
