@@ -1,24 +1,17 @@
-**This is a template README.md.  Be sure to update this with project specific content that describes your performance test project.**
-
 # economic-crime-levy-performance-tests
-Performance test suite for the `<digital service name>`, using [performance-test-runner](https://github.com/hmrc/performance-test-runner) under the hood.
-
+Performance test suite for the Economic Crime Levy project, using [performance-test-runner](https://github.com/hmrc/performance-test-runner) under the hood.
 
 ## Running the tests
 
 Prior to executing the tests ensure you have:
 
-* Docker - to start mongo container
-* Installed/configured service manager
+* Mongo running on your machine
+* ECL services running on your machine via service manager
 
-Run the following command to start the services locally:
+Run the following command to start all the ECL services locally:
 ```
-docker run --rm -d --name mongo -d -p 27017:27017 mongo:4.0
-
-sm --start PLATFORM_EXAMPLE_UI_TESTS -r --wait 100
+sm --start ECONOMIC_CRIME_LEVY_ALL -r
 ```
-
-Using the `--wait 100` argument ensures a health check is run on all the services started as part of the profile. `100` refers to the given number of seconds to wait for services to pass health checks.
 
 ## Logging
 

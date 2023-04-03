@@ -24,12 +24,16 @@ import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
 
 object RegistrationRequests extends Configuration {
 
-  val amlRegulatedActivityUrl: String            = s"$registerAuthWizardUrl/did-you-carry-out-aml-regulated-activity"
-  val whoIsYourAmlSupervisorUrl: String          = s"$registerAuthWizardUrl/who-is-your-aml-supervisor"
-  val relevantAccountingPeriodUrl: String        = s"$registerAuthWizardUrl/is-relevant-accounting-period-12-months"
-  val ukRevenueForAccountingPeriodUrl: String    = s"$registerAuthWizardUrl/uk-revenue-for-accounting-period"
+  def redirectLocation(relativeLocation: String): String =
+    s"$registrationUrl/$relativeLocation"
+
+  val amlRegulatedActivityUrl: String            = s"$registerAuthWizardUrl/aml-regulated-activity-question"
+  val whoIsYourAmlSupervisorUrl: String          = s"$registerAuthWizardUrl/your-aml-supervisor"
+  val relevantAccountingPeriodUrl: String        = s"$registerAuthWizardUrl/accounting-period-question"
+  val ukRevenueForAccountingPeriodUrl: String    = s"$registerAuthWizardUrl/uk-revenue"
   val whatIsYourEntityType: String               = s"$registerAuthWizardUrl/what-is-your-entity-type"
-  val subGrsJourneyDataUrl: String               = s"$registerAuthWizardUrl/test-only/stub-grs-journey-data?continueUrl=normalmode&entityType=UkLimitedCompany"
+  val stubGrsJourneyDataUrl: String              =
+    s"$registerAuthWizardUrl/test-only/stub-grs-journey-data?continueUrl=normalmode&entityType=UkLimitedCompany"
   val whatIsYourBusinessSectorUrl: String        = s"$registerAuthWizardUrl/what-is-your-business-sector"
   val firstContactPersonNameUrl: String          = s"$registerAuthWizardUrl/contact-name"
   val firstContactPersonRoleUrl: String          = s"$registerAuthWizardUrl/contact-role"
@@ -42,7 +46,7 @@ object RegistrationRequests extends Configuration {
   val secondContactPersonTelephoneUrl: String    = s"$registerAuthWizardUrl/second-contact-telephone"
   val registeredContactAddressUrl: String        = s"$registerAuthWizardUrl/contact-address"
   val submitCheckYourAnswersUrl: String          = s"$registerAuthWizardUrl/check-your-answers"
-  val registrationSubmittedUrl: String          = s"$registerAuthWizardUrl/registration-submitted"
+  val registrationSubmittedUrl: String           = s"$registerAuthWizardUrl/registration-submitted"
 
   val navigateToWhetherOrNotAmlActivityStartedInCurrentYear: HttpRequestBuilder =
     http("Navigate to /did-you-carry-out-aml-regulated-activity")
@@ -112,20 +116,26 @@ object RegistrationRequests extends Configuration {
 
   val navigateToStubGrsJourneyData: HttpRequestBuilder =
     http("Navigate to /test-only/stub-grs-journey-data")
-      .get(subGrsJourneyDataUrl)
+      .get(stubGrsJourneyDataUrl)
       .check(status.is(200))
       .check(saveCsrfToken)
 
+  val navigateToGrsContinue: HttpRequestBuilder =
+    http("Navigate to /grs-continue/normalmode")
+      .get(redirectLocation("${grsContinueLocation}"))
+      .check(status.is(303))
+
   def submitStubGrsJourneyData(): HttpRequestBuilder =
     http("Stub GRS Journey Data")
-      .post(subGrsJourneyDataUrl)
+      .post(stubGrsJourneyDataUrl)
       .formParam("csrfToken", "${csrfToken}")
-      .formParam("grsJourneyDataJson",
+      .formParam(
+        "grsJourneyDataJson",
         """{
             "companyProfile" : {
               "companyName" : "Test Company Name",
               "companyNumber" : "01234567",
-              "dateOfIncorporation" : 1196676930000,
+              "dateOfIncorporation" : "2007-12-03",
               "unsanitisedCHROAddress" : {
                 "address_line_1" : "Test Address Line 1",
                 "address_line_2" : "Test Address Line 2",
@@ -141,8 +151,10 @@ object RegistrationRequests extends Configuration {
               "registrationStatus" : "REGISTERED",
               "registeredBusinessPartnerId" : "X00000000000001"
             }
-          }""")
+          }"""
+      )
       .check(status.is(303))
+      .check(header("Location").saveAs("grsContinueLocation"))
 
   val navigateToWhatIsYourBusinessSector: HttpRequestBuilder =
     http("Navigate to /what-is-your-business-sector")
@@ -298,10 +310,9 @@ object RegistrationRequests extends Configuration {
       .formParam("csrfToken", "${csrfToken}")
       .check(status.is(303))
 
-    val navigateToRegistrationSubmitted: HttpRequestBuilder =
-      http("Navigate to /registration-submitted")
-        .get(registrationSubmittedUrl)
-        .check(status.is(200))
-        .check(saveCsrfToken)
+  val navigateToRegistrationSubmitted: HttpRequestBuilder =
+    http("Navigate to /registration-submitted")
+      .get(registrationSubmittedUrl)
+      .check(status.is(200))
 
 }

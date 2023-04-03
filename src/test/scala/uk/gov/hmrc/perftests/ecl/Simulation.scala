@@ -26,7 +26,9 @@ class Simulation extends PerformanceTestRunner {
   setup("ecl-registration-login", "Login via Auth Wizard for registration").withRequests(
     navigateToRegisterAuthWizard,
     navigateToAuthWizardRedirectionUrl,
-    submitRegisterAuthWizardForm()
+    submitRegisterAuthWizardForm(),
+    navigateToEclBetaAccess,
+    submitEclBetaAccess("123456"),
   )
   setup("ecl-registration-journey", "Register for ECL").withActions(
     navigateToWhetherOrNotAmlActivityStartedInCurrentYear,
@@ -41,6 +43,9 @@ class Simulation extends PerformanceTestRunner {
     submitEntityType("UkLimitedCompany"),
     navigateToStubGrsJourneyData,
     submitStubGrsJourneyData(),
+    navigateToGrsContinue,
+    navigateToWhatIsYourBusinessSector,
+    submitWhatIsYourBusinessSector("Auditor"),
     navigateToFirstContactPersonName,
     submitFirstContactPersonName("Jim"),
     navigateToFirstContactPersonRole,
@@ -56,15 +61,14 @@ class Simulation extends PerformanceTestRunner {
     navigateToSecondContactPersonRole,
     submitSecondContactPersonRole("Accounts Officer"),
     navigateToSecondContactPersonEmail,
-    submitSecondContactPersonEmail("vweify@verify.com"),
+    submitSecondContactPersonEmail("verify@verify.com"),
     navigateToSecondContactPersonTelephone,
     submitSecondContactPersonTelephone("0175344171"),
     navigateToRegisteredContactAddress,
     submitRegisteredContactAddress("true"),
     navigateToSubmitCheckYourAnswers,
     submitCheckYourAnswers(),
-    navigateToRegistrationSubmitted,
-
+    navigateToRegistrationSubmitted
   )
   setup("ecl-returns-login", "Log in via Auth Wizard for returns").withRequests(
     navigateToReturnAuthWizard,
@@ -88,8 +92,7 @@ class Simulation extends PerformanceTestRunner {
     navigateToContactTelephone,
     submitContactTelephone("01475344272"),
     navigateToCheckYourAnswers,
-    submitCheckYourAnswersForReturns,
-
+    submitCheckYourAnswersForReturns
   )
   runSimulation()
 }
