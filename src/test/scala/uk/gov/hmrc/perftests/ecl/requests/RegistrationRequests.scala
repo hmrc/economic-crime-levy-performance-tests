@@ -27,10 +27,10 @@ object RegistrationRequests extends Configuration {
   def redirectLocation(relativeLocation: String): String =
     s"$registrationUrl/$relativeLocation"
 
-  val amlRegulatedActivityUrl: String            = s"$registerAuthWizardUrl/did-you-carry-out-aml-regulated-activity"
-  val whoIsYourAmlSupervisorUrl: String          = s"$registerAuthWizardUrl/who-is-your-aml-supervisor"
-  val relevantAccountingPeriodUrl: String        = s"$registerAuthWizardUrl/is-relevant-accounting-period-12-months"
-  val ukRevenueForAccountingPeriodUrl: String    = s"$registerAuthWizardUrl/uk-revenue-for-accounting-period"
+  val amlRegulatedActivityUrl: String            = s"$registerAuthWizardUrl/aml-regulated-activity-question"
+  val whoIsYourAmlSupervisorUrl: String          = s"$registerAuthWizardUrl/your-aml-supervisor"
+  val relevantAccountingPeriodUrl: String        = s"$registerAuthWizardUrl/accounting-period-question"
+  val ukRevenueForAccountingPeriodUrl: String    = s"$registerAuthWizardUrl/uk-revenue"
   val whatIsYourEntityType: String               = s"$registerAuthWizardUrl/what-is-your-entity-type"
   val stubGrsJourneyDataUrl: String              =
     s"$registerAuthWizardUrl/test-only/stub-grs-journey-data?continueUrl=normalmode&entityType=UkLimitedCompany"

@@ -26,7 +26,9 @@ class Simulation extends PerformanceTestRunner {
   setup("ecl-registration-login", "Login via Auth Wizard for registration").withRequests(
     navigateToRegisterAuthWizard,
     navigateToAuthWizardRedirectionUrl,
-    submitRegisterAuthWizardForm()
+    submitRegisterAuthWizardForm(),
+    navigateToEclBetaAccess,
+    submitEclBetaAccess("123456"),
   )
   setup("ecl-registration-journey", "Register for ECL").withActions(
     navigateToWhetherOrNotAmlActivityStartedInCurrentYear,

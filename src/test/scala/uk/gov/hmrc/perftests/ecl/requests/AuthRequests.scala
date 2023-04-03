@@ -25,8 +25,9 @@ import uk.gov.hmrc.perftests.ecl.Configuration
 object AuthRequests extends Configuration {
 
   val registerAuthWizardUrl: String            = s"$registrationUrl/register-for-economic-crime-levy/"
-  val authWizardRegisterRedirectionUrl: String = s"$registerAuthWizardUrl/did-you-carry-out-aml-regulated-activity"
+  val authWizardRegisterRedirectionUrl: String = s"$registerAuthWizardUrl/aml-regulated-activity-question"
   val returnAuthWizardUrl: String              = s"$returnsUrl/submit-economic-crime-levy-return/"
+  val eclBetaAccessUrl: String = s"$registerAuthWizardUrl/ecl-beta-access?continueUrl=http%3A%2F%2Flocalhost%3A14000%2Fregister-for-economic-crime-levy%2Faml-regulated-activity-question"
 
   val navigateToRegisterAuthWizard: HttpRequestBuilder =
     http("Navigate to Register AuthWizard Page")
@@ -69,6 +70,19 @@ object AuthRequests extends Configuration {
       .formParam("enrolment[3].state", "Activated")
       .check(status.is(303))
       .check(header("Location").is(authWizardRegisterRedirectionUrl))
+
+  val navigateToEclBetaAccess: HttpRequestBuilder =
+    http("Navigate to /ecl Beta Access")
+      .get(eclBetaAccessUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+
+  def submitEclBetaAccess(accessCode: String): HttpRequestBuilder =
+    http("ECL Access code: " + accessCode)
+      .post(eclBetaAccessUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value", accessCode)
+      .check(status.is(303))
 
   val navigateToReturnAuthWizard: HttpRequestBuilder =
     http("Navigate to auth wizard return redirection url")
