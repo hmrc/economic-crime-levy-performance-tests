@@ -18,6 +18,7 @@ package uk.gov.hmrc.perftests.ecl
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
+import uk.gov.hmrc.perftests.ecl.requests.EnrolmentRequests._
 import uk.gov.hmrc.perftests.ecl.requests.RegistrationRequests._
 import uk.gov.hmrc.perftests.ecl.requests.ReturnsRequests._
 
@@ -93,6 +94,16 @@ class Simulation extends PerformanceTestRunner {
     submitContactTelephone("01475344272"),
     navigateToCheckYourAnswers,
     submitCheckYourAnswersForReturns
+  )
+  setup("ecl-enrolment-journey", "Claim enrolment for ECL").withRequests(
+    navigateToEnrolmentAuthWizard,
+    submitEnrolmentAuthWizardForm(),
+    navigateToDoYouHaveAnEclReferenceNumber,
+    submitDoYouHaveAnEclReferenceNumber("Yes"),
+    navigateToYourEclReferenceNumber,
+    submitYourEclReferenceNumber("XMECL0000000001"),
+    navigateToEclRegistrationDate,
+    submitYourEclRegistrationDate("01", "03", "2023")
   )
   runSimulation()
 }
