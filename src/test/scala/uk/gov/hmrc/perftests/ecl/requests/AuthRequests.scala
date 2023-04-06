@@ -27,7 +27,9 @@ object AuthRequests extends Configuration {
   val registerAuthWizardUrl: String            = s"$registrationUrl/register-for-economic-crime-levy/"
   val authWizardRegisterRedirectionUrl: String = s"$registerAuthWizardUrl/aml-regulated-activity-question"
   val returnAuthWizardUrl: String              = s"$returnsUrl/submit-economic-crime-levy-return/"
-  val eclBetaAccessUrl: String = s"$registerAuthWizardUrl/ecl-beta-access?continueUrl=http%3A%2F%2Flocalhost%3A14000%2Fregister-for-economic-crime-levy%2Faml-regulated-activity-question"
+  val eclBetaAccessUrl: String =
+    s"$registerAuthWizardUrl/ecl-beta-access?continueUrl=http%3A%2F%2Flocalhost%3A14000%2Fregister-for-economic-crime-levy%2Faml-regulated-activity-question"
+  val enrolmentAuthWizardUrl: String = s"$enrolmentUrl/add-economic-crime-levy/do-you-have-an-ecl-reference-number/"
 
   val navigateToRegisterAuthWizard: HttpRequestBuilder =
     http("Navigate to Register AuthWizard Page")
@@ -127,4 +129,41 @@ object AuthRequests extends Configuration {
       .formParam("enrolment[3].state", "Activated")
       .check(status.is(303))
       .check(header("Location").is(returnAuthWizardUrl))
+
+  val navigateToEnrolmentAuthWizard: HttpRequestBuilder =
+    http("Navigate to auth wizard enrolment redirection url")
+      .get(enrolmentAuthWizardUrl)
+      .check(status.is(303))
+
+  def submitEnrolmentAuthWizardForm(): HttpRequestBuilder =
+    http("Enrolment redirection url")
+      .post(authWizardUrl)
+      .formParam("authorityId", "")
+      .formParam("gatewayToken", "")
+      .formParam("redirectionUrl", enrolmentAuthWizardUrl)
+      .formParam("credentialStrength", "strong")
+      .formParam("confidenceLevel", "50")
+      .formParam("affinityGroup", "Individual")
+      .formParam("email", "user@test.com")
+      .formParam("credentialRole", "User")
+      .formParam("additionalInfo.emailVerified", "N/A")
+      .formParam("presets-dropdown", "IR-SA")
+      .formParam("enrolment[0].name", "")
+      .formParam("enrolment[0].taxIdentifier[0].name", "")
+      .formParam("enrolment[0].taxIdentifier[0].value", "")
+      .formParam("enrolment[0].state", "Activated")
+      .formParam("enrolment[1].name", "")
+      .formParam("enrolment[1].taxIdentifier[0].name", "")
+      .formParam("enrolment[1].taxIdentifier[0].value", "")
+      .formParam("enrolment[1].state", "Activated")
+      .formParam("enrolment[2].name", "")
+      .formParam("enrolment[2].taxIdentifier[0].name", "")
+      .formParam("enrolment[2].taxIdentifier[0].value", "")
+      .formParam("enrolment[2].state", "Activated")
+      .formParam("enrolment[3].name", "")
+      .formParam("enrolment[3].taxIdentifier[0].name", "")
+      .formParam("enrolment[3].taxIdentifier[0].value", "")
+      .formParam("enrolment[3].state", "Activated")
+      .check(status.is(303))
+      .check(header("Location").is(enrolmentAuthWizardUrl))
 }
