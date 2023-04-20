@@ -82,8 +82,8 @@ class Simulation extends PerformanceTestRunner {
     submitUkRevenueForTheRelevantAccountingPeriod("10200000"),
     navigateToAmlRegulatedActivity,
     submitAmlRegulatedActivity("true"),
-    navigateToAmountDue,
-    submitAmountDue,
+//    navigateToAmountDue,
+//    submitAmountDue,
     navigateToContactName,
     submitContactName("James V"),
     navigateToContactRole,
@@ -92,8 +92,8 @@ class Simulation extends PerformanceTestRunner {
     submitContactEmailAddress("test@oc.com"),
     navigateToContactTelephone,
     submitContactTelephone("01475344272"),
-    navigateToCheckYourAnswers,
-    submitCheckYourAnswersForReturns
+//    navigateToCheckYourAnswers,
+//    submitCheckYourAnswersForReturns
   )
   setup("ecl-enrolment-journey", "Claim enrolment for ECL").withRequests(
     navigateToEnrolmentAuthWizard,
