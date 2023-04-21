@@ -24,6 +24,7 @@ import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
 
 object ReturnsRequests extends Configuration {
 
+  val startUrl: String                              = s"$returnAuthWizardUrl/period/22XY"
   val isRelevantAccountingPeriod12MonthsUrl: String = s"$returnAuthWizardUrl/is-relevant-accounting-period-12-months"
   val ukRevenueInAccountingPeriodUrl: String        = s"$returnAuthWizardUrl/uk-revenue-in-accounting-period"
   val amlRegulatedActivityUrl: String               = s"$returnAuthWizardUrl/aml-regulated-activity"
@@ -33,6 +34,11 @@ object ReturnsRequests extends Configuration {
   val contactEmailUrl: String                       = s"$returnAuthWizardUrl/contact-email-address"
   val contactTelephoneUrl: String                   = s"$returnAuthWizardUrl/contact-telephone"
   val checkYourAnswersUrl: String                   = s"$returnAuthWizardUrl/check-your-answers"
+
+  val navigateToStartReturn: HttpRequestBuilder =
+    http("Navigate to Return start page")
+      .get(startUrl)
+      .check(status.is(200))
 
   val navigateToIsRelevantAccountingPeriod12MonthsUrl: HttpRequestBuilder =
     http("Navigate to Is relevant Accounting period 12 months")

@@ -29,7 +29,7 @@ class Simulation extends PerformanceTestRunner {
     navigateToAuthWizardRedirectionUrl,
     submitRegisterAuthWizardForm(),
     navigateToEclBetaAccess,
-    submitEclBetaAccess("123456"),
+    submitEclBetaAccess("123456")
   )
   setup("ecl-registration-journey", "Register for ECL").withActions(
     navigateToWhetherOrNotAmlActivityStartedInCurrentYear,
@@ -76,14 +76,15 @@ class Simulation extends PerformanceTestRunner {
     submitReturnsAuthWizardForm()
   )
   setup("ecl-returns-journey", "ECL Returns").withActions(
+    navigateToStartReturn,
     navigateToIsRelevantAccountingPeriod12MonthsUrl,
     submitIsYourRelevantAccountingPeriod12Months("true"),
     navigateToUkRevenueAccountingPeriod,
     submitUkRevenueForTheRelevantAccountingPeriod("10200000"),
     navigateToAmlRegulatedActivity,
     submitAmlRegulatedActivity("true"),
-//    navigateToAmountDue,
-//    submitAmountDue,
+    navigateToAmountDue,
+    submitAmountDue(),
     navigateToContactName,
     submitContactName("James V"),
     navigateToContactRole,
@@ -92,8 +93,8 @@ class Simulation extends PerformanceTestRunner {
     submitContactEmailAddress("test@oc.com"),
     navigateToContactTelephone,
     submitContactTelephone("01475344272"),
-//    navigateToCheckYourAnswers,
-//    submitCheckYourAnswersForReturns
+    navigateToCheckYourAnswers,
+    submitCheckYourAnswersForReturns()
   )
   setup("ecl-enrolment-journey", "Claim enrolment for ECL").withRequests(
     navigateToEnrolmentAuthWizard,
