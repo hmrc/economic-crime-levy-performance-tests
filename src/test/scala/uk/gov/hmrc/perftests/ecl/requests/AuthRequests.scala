@@ -88,7 +88,7 @@ object AuthRequests extends Configuration {
 
   val navigateToReturnAuthWizard: HttpRequestBuilder =
     http("Navigate to auth wizard return redirection url")
-      .get(returnAuthWizardUrl)
+      .get(returnAuthWizardUrl+"/period/22XY")
       .check(status.is(303))
 
   def submitReturnsAuthWizardForm(
@@ -100,7 +100,7 @@ object AuthRequests extends Configuration {
       .post(authWizardUrl)
       .formParam("authorityId", "")
       .formParam("gatewayToken", "")
-      .formParam("redirectionUrl", returnAuthWizardUrl)
+      .formParam("redirectionUrl", returnAuthWizardUrl+"/period/22XY")
       .formParam("credentialStrength", "strong")
       .formParam("confidenceLevel", "50")
       .formParam("affinityGroup", "Individual")
@@ -128,7 +128,7 @@ object AuthRequests extends Configuration {
       .formParam("enrolment[3].taxIdentifier[0].value", "")
       .formParam("enrolment[3].state", "Activated")
       .check(status.is(303))
-      .check(header("Location").is(returnAuthWizardUrl))
+      .check(header("Location").is(returnAuthWizardUrl+"/period/22XY"))
 
   val navigateToEnrolmentAuthWizard: HttpRequestBuilder =
     http("Navigate to auth wizard enrolment redirection url")
