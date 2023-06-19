@@ -17,6 +17,7 @@
 package uk.gov.hmrc.perftests.ecl
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
+import uk.gov.hmrc.perftests.ecl.requests.AccountRequest._
 import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
 import uk.gov.hmrc.perftests.ecl.requests.EnrolmentRequests._
 import uk.gov.hmrc.perftests.ecl.requests.RegistrationRequests._
@@ -105,6 +106,12 @@ class Simulation extends PerformanceTestRunner {
     submitYourEclReferenceNumber("XMECL0000000001"),
     navigateToEclRegistrationDate,
     submitYourEclRegistrationDate("01", "03", "2023")
+  )
+  setup("ecl-account-journey", "Account journey for ECL").withRequests(
+    navigateToAccountAuthWizard,
+    submitAccountAuthWizardForm(),
+    navigateToYourEclReturns,
+    navigateToSpecificReturn("22XY"),
   )
   runSimulation()
 }
