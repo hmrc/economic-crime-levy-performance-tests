@@ -28,7 +28,7 @@ object RegistrationRequests extends Configuration {
     s"$registrationUrl/$relativeLocation"
 
   val amlRegulatedActivityUrl: String            = s"$registerAuthWizardUrl/aml-regulated-activity-question"
-  val whoIsYourAmlSupervisorUrl: String          = s"$registerAuthWizardUrl/your-aml-supervisor"
+  val whoIsYourAmlSupervisorUrl: String          = s"$registerAuthWizardUrl/your-aml-supervisor/Initial"
   val relevantAccountingPeriodUrl: String        = s"$registerAuthWizardUrl/accounting-period-question"
   val ukRevenueForAccountingPeriodUrl: String    = s"$registerAuthWizardUrl/uk-revenue-in-accounting-period"
   val whatIsYourEntityType: String               = s"$registerAuthWizardUrl/what-is-your-entity-type"
