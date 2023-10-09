@@ -31,6 +31,7 @@ object RegistrationRequests extends Configuration {
   val whoIsYourAmlSupervisorUrl: String          = s"$registerAuthWizardUrl/your-aml-supervisor/Initial"
   val relevantAccountingPeriodUrl: String        = s"$registerAuthWizardUrl/accounting-period-question"
   val ukRevenueForAccountingPeriodUrl: String    = s"$registerAuthWizardUrl/uk-revenue-in-accounting-period"
+  val previousFinancialYearUrl: String           = s"$registerAuthWizardUrl/previous-financial-year?fromRevenuePage=true"
   val whatIsYourEntityType: String               = s"$registerAuthWizardUrl/what-is-your-entity-type"
   val stubGrsJourneyDataUrl: String              =
     s"$registerAuthWizardUrl/test-only/stub-grs-journey-data?continueUrl=normalmode&entityType=UkLimitedCompany"
@@ -99,6 +100,19 @@ object RegistrationRequests extends Configuration {
       .post(ukRevenueForAccountingPeriodUrl)
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", ukRevenue)
+      .check(status.is(303))
+
+  val navigateToPreviousFinancialYear: HttpRequestBuilder =
+    http("Navigate to /previous-financial-year")
+      .get(previousFinancialYearUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+
+  def submitLevyForPreviousFinancialYear(answer: String): HttpRequestBuilder =
+    http("Liable for Previous Financial Year: " + answer)
+      .post(previousFinancialYearUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value", answer)
       .check(status.is(303))
 
   val navigateToEntityType: HttpRequestBuilder =
