@@ -24,7 +24,10 @@ import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
 
 object ReturnsRequests extends Configuration {
 
-  val startUrl: String                              = s"$returnAuthWizardUrl/period/23XY"
+  val expectedTaxYearStart = EclTaxYear.currentFyStartYear.takeRight(2)
+  val taxYear = s"$expectedTaxYearStart XY".replaceAll("\\s", "")
+
+  val startUrl: String                              = s"$returnAuthWizardUrl/period/$taxYear"
   val isRelevantAccountingPeriod12MonthsUrl: String = s"$returnAuthWizardUrl/is-relevant-accounting-period-12-months"
   val ukRevenueInAccountingPeriodUrl: String        = s"$returnAuthWizardUrl/uk-revenue-in-accounting-period"
   val amlRegulatedActivityUrl: String               = s"$returnAuthWizardUrl/aml-regulated-activity"
