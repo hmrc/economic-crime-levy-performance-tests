@@ -26,7 +26,7 @@ import uk.gov.hmrc.perftests.ecl.requests.AuthRequests.{accountAuthWizardUrl, re
 object AccountRequest extends Configuration{
 
   val expectedTaxYearStart = EclTaxYear.currentFyStartYear.takeRight(2)
-  val taxYear = s"$expectedTaxYearStart XY".replaceAll("\\s", "")
+  val taxYear = s"${expectedTaxYearStart}XY"
 
   val viewYourReturnsUrl: String           = s"$accountAuthWizardUrl/your-ecl-returns"
   val startSubmitReturnUrl: String         = s"$returnAuthWizardUrl/period"
