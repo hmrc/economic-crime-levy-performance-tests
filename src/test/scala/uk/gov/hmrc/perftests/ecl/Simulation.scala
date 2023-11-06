@@ -28,9 +28,7 @@ class Simulation extends PerformanceTestRunner {
   setup("ecl-registration-login", "Login via Auth Wizard for registration").withRequests(
     navigateToRegisterAuthWizard,
     navigateToAuthWizardRedirectionUrl,
-    submitRegisterAuthWizardForm(),
-    navigateToEclBetaAccess,
-    submitEclBetaAccess("123456")
+    submitRegisterAuthWizardForm()
   )
   setup("ecl-registration-journey", "Register for ECL").withActions(
     navigateToWhetherOrNotAmlActivityStartedInCurrentYear,
@@ -41,6 +39,8 @@ class Simulation extends PerformanceTestRunner {
     submitRelevantAccountingPeriod("true"),
     navigateToUkRevenueForAccountingPeriod,
     submitUkRevenueForAccountingPeriod("10200000"),
+    navigateToEclLiableForPreviousFinancialYear,
+    submitEclLiableForPreviousFinancialYear("true"),
     navigateToEntityType,
     submitEntityType("UkLimitedCompany"),
     navigateToStubGrsJourneyData,
