@@ -25,6 +25,9 @@ import uk.gov.hmrc.perftests.ecl.requests.AuthRequests.{accountAuthWizardUrl, re
 
 object AccountRequest extends Configuration{
 
+  val expectedTaxYearStart = EclTaxYear.currentFyStartYear.takeRight(2)
+  val taxYear = s"${expectedTaxYearStart}XY"
+
   val viewYourReturnsUrl: String           = s"$accountAuthWizardUrl/your-ecl-returns"
   val startSubmitReturnUrl: String         = s"$returnAuthWizardUrl/period"
 
@@ -34,8 +37,8 @@ object AccountRequest extends Configuration{
       .get(viewYourReturnsUrl)
       .check(status.is(200))
 
-  def navigateToSpecificReturn(returnPeriod: String): HttpRequestBuilder =
+  def navigateToSpecificReturn(): HttpRequestBuilder =
     http("navigateToSpecificReturn")
-      .get(s"$startSubmitReturnUrl/$returnPeriod")
+      .get(s"$startSubmitReturnUrl/$taxYear")
       .check(status.is(200))
 }

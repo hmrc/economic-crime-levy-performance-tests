@@ -111,7 +111,7 @@ class Simulation extends PerformanceTestRunner {
     navigateToAccountAuthWizard,
     submitAccountAuthWizardForm(),
     navigateToYourEclReturns,
-    navigateToSpecificReturn("22XY"),
+    navigateToSpecificReturn()
   )
   runSimulation()
 }
