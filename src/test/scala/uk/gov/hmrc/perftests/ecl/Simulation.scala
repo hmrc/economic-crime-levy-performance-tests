@@ -18,6 +18,7 @@ package uk.gov.hmrc.perftests.ecl
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.ecl.requests.AccountRequest._
+import uk.gov.hmrc.perftests.ecl.requests.AmendRegistrationRequests._
 import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
 import uk.gov.hmrc.perftests.ecl.requests.EnrolmentRequests._
 import uk.gov.hmrc.perftests.ecl.requests.RegistrationRequests._
@@ -112,6 +113,42 @@ class Simulation extends PerformanceTestRunner {
     submitAccountAuthWizardForm(),
     navigateToYourEclReturns,
     navigateToSpecificReturn()
+  )
+  setup("ecl-amend-registration-journey", "Amend Registration for ECL").withRequests(
+    navigateToAccountAuthWizard,
+    submitAccountAuthWizardForm(),
+    navigateToEclAccount,
+    navigateToSubmitAmendRegistration,
+    navigateToAmendAmlSupervisor,
+    submitAmendAmlSupervisor("Hmrc"),
+    navigateToYourAmendBusinessSector,
+    submitYourAmendBusinessSector("Auditor"),
+    navigateToAmendFirstContactPersonName,
+    submitAmendFirstContactPersonName("James"),
+    navigateToAmendFirstContactPersonRole,
+    submitAmendFirstContactPersonRole("Compliance Office"),
+    navigateToAmendFirstContactPersonEmail,
+    submitAmendFirstContactPersonEmail("test@oc.com"),
+    navigateToAmendFirstContactPersonTelephone,
+    submitAmendFirstContactPersonTelephone("07291722122"),
+    navigateToAmendWouldYouLikeToAddAnotherContact,
+    submitAmendWouldYouLikeToAddAnotherContact("true"),
+    navigateToAmendSecondContactPersonName,
+    submitAmendSecondContactPersonName("Jon"),
+    navigateToAmendSecondContactPersonRole,
+    submitAmendSecondContactPersonRole("Accounts Director"),
+    navigateToAmendSecondContactPersonEmail,
+    submitAmendSecondContactPersonEmail("verify@oc.com"),
+    navigateToAmendSecondContactPersonTelephone,
+    submitAmendSecondContactPersonTelephone("0175344232"),
+    navigateToWhetherOrNotContactAddressInUk,
+    submitWhetherOrNotContactAddressInUk("true"),
+    navigateToStubAlfJourneyData,
+    submitStubAlfJourneyData(),
+    navigateToAlfContinue,
+    navigateToAmendSubmitCheckYourAnswers,
+    submitAmendCheckYourAnswers(),
+    navigateToAmendRegistrationSubmitted
   )
   runSimulation()
 }

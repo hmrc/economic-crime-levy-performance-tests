@@ -160,10 +160,10 @@ object AuthRequests extends Configuration {
       .get(accountAuthWizardUrl)
       .check(status.is(303))
 
+  val identifierValue: String = "XMECL0000000005"
   def submitAccountAuthWizardForm(
     enrolmentKey: String = "HMRC-ECL-ORG",
     identifierName: String = "EclRegistrationReference",
-    identifierValue: String = "XMECL0000000005"
     ): HttpRequestBuilder =
     http("Log in with redirection url")
       .post(authWizardUrl)
