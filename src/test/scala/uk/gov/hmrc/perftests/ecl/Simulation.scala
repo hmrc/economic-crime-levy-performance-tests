@@ -19,6 +19,7 @@ package uk.gov.hmrc.perftests.ecl
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.ecl.requests.AccountRequest._
 import uk.gov.hmrc.perftests.ecl.requests.AmendRegistrationRequests._
+import uk.gov.hmrc.perftests.ecl.requests.AmendReturnsRequests._
 import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
 import uk.gov.hmrc.perftests.ecl.requests.EnrolmentRequests._
 import uk.gov.hmrc.perftests.ecl.requests.RegistrationRequests._
@@ -96,7 +97,8 @@ class Simulation extends PerformanceTestRunner {
     navigateToContactTelephone,
     submitContactTelephone("01475344272"),
     navigateToCheckYourAnswers,
-    submitCheckYourAnswersForReturns()
+    submitCheckYourAnswersForReturns(),
+    navigateToReturnSubmitted
   )
   setup("ecl-enrolment-journey", "Claim enrolment for ECL").withRequests(
     navigateToEnrolmentAuthWizard,
@@ -149,6 +151,31 @@ class Simulation extends PerformanceTestRunner {
     navigateToAmendSubmitCheckYourAnswers,
     submitAmendCheckYourAnswers(),
     navigateToAmendRegistrationSubmitted
+  )
+  setup("ecl-amend-returns-journey", "Amend ECL Returns").withRequests(
+    navigateToAccountAuthWizard,
+    submitAccountAuthWizardForm(),
+    navigateToYourEclReturns,
+    navigateToAmendStartReturn,
+    navigateToAmendIsRelevantAccountingPeriod12MonthsUrl,
+    submitAmendIsYourRelevantAccountingPeriod12Months("true"),
+    navigateToAmendUkRevenueAccountingPeriod,
+    submitAmendUkRevenueForTheRelevantAccountingPeriod("10200000"),
+    navigateToAmendAmlRegulatedActivity,
+    submitAmendAmlRegulatedActivity("true"),
+    navigateToAmendAmountDue,
+    submitAmendAmountDue(),
+    navigateToAmendContactName,
+    submitAmendContactName("Dan D"),
+    navigateToAmendContactRole,
+    submitAmendContactRole("Director"),
+    navigateToAmendContactEmailAddress,
+    submitAmendContactEmailAddress("verify@oc.com"),
+    navigateToAmendContactTelephone,
+    submitAmendContactTelephone("01475322272"),
+    navigateToAmendCheckYourAnswers,
+    submitAmendCheckYourAnswersForReturns(),
+    navigateToAmendReturnSubmitted
   )
   runSimulation()
 }

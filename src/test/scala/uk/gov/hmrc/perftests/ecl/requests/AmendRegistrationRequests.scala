@@ -80,7 +80,7 @@ object AmendRegistrationRequests extends Configuration {
       .check(saveCsrfToken)
 
   def submitAmendFirstContactPersonName(contactName: String): HttpRequestBuilder =
-    http("Submit contact person's Name: " + contactName)
+    http("Submit amend contact person's Name: " + contactName)
       .post(RegistrationRequests.firstContactPersonNameUrl)
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", contactName)
@@ -93,7 +93,7 @@ object AmendRegistrationRequests extends Configuration {
       .check(saveCsrfToken)
 
   def submitAmendFirstContactPersonRole(contactRole: String): HttpRequestBuilder =
-    http("Submit contact person's Role: " + contactRole)
+    http("Submit amend contact person's Role: " + contactRole)
       .post(RegistrationRequests.firstContactPersonRoleUrl)
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", contactRole)
@@ -106,7 +106,7 @@ object AmendRegistrationRequests extends Configuration {
       .check(saveCsrfToken)
 
   def submitAmendFirstContactPersonEmail(emailAddress: String): HttpRequestBuilder =
-    http("Submit contact person's Email address: " + emailAddress)
+    http("Submit amend contact person's Email address: " + emailAddress)
       .post(RegistrationRequests.firstContactPersonEmailUrl)
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", emailAddress)
@@ -119,7 +119,7 @@ object AmendRegistrationRequests extends Configuration {
       .check(saveCsrfToken)
 
   def submitAmendFirstContactPersonTelephone(contactNumber: String): HttpRequestBuilder =
-    http("Submit contact person's Telephone: " + contactNumber)
+    http("Submit amend contact person's Telephone: " + contactNumber)
       .post(RegistrationRequests.firstContactPersonTelephoneUrl)
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", contactNumber)
@@ -145,7 +145,7 @@ object AmendRegistrationRequests extends Configuration {
       .check(saveCsrfToken)
 
   def submitAmendSecondContactPersonName(contactName: String): HttpRequestBuilder =
-    http("Submit second contact person's Name: " + contactName)
+    http("Submit amend second contact person's Name: " + contactName)
       .post(RegistrationRequests.secondContactPersonNameUrl)
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", contactName)
@@ -158,7 +158,7 @@ object AmendRegistrationRequests extends Configuration {
       .check(saveCsrfToken)
 
   def submitAmendSecondContactPersonRole(contactRole: String): HttpRequestBuilder =
-    http("Submit second contact person's Role: " + contactRole)
+    http("Submit amend second contact person's Role: " + contactRole)
       .post(RegistrationRequests.secondContactPersonRoleUrl)
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", contactRole)
@@ -171,7 +171,7 @@ object AmendRegistrationRequests extends Configuration {
       .check(saveCsrfToken)
 
   def submitAmendSecondContactPersonEmail(emailAddress: String): HttpRequestBuilder =
-    http("Submit second contact person's Email address: " + emailAddress)
+    http("Submit amend second contact person's Email address: " + emailAddress)
       .post(RegistrationRequests.secondContactPersonEmailUrl)
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", emailAddress)
@@ -184,7 +184,7 @@ object AmendRegistrationRequests extends Configuration {
       .check(saveCsrfToken)
 
   def submitAmendSecondContactPersonTelephone(contactNumber: String): HttpRequestBuilder =
-    http("Submit second contact person's Telephone: " + contactNumber)
+    http("Submit amend second contact person's Telephone: " + contactNumber)
       .post(RegistrationRequests.secondContactPersonTelephoneUrl)
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", contactNumber)
@@ -197,7 +197,7 @@ object AmendRegistrationRequests extends Configuration {
       .check(saveCsrfToken)
 
   def submitWhetherOrNotContactAddressInUk(answer: String): HttpRequestBuilder =
-    http("Submit registered contact address: " + answer)
+    http("Submit amend registered contact address: " + answer)
       .post(contactUkAddressUrl)
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", answer)
@@ -240,7 +240,7 @@ object AmendRegistrationRequests extends Configuration {
       .check(saveCsrfToken)
 
   def submitAmendCheckYourAnswers(): HttpRequestBuilder =
-    http("Submit amend check your answers")
+    http("Amend Submit check your answers")
       .post(RegistrationRequests.submitCheckYourAnswersUrl)
       .formParam("csrfToken", "${csrfToken}")
       .check(status.is(303))
