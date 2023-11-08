@@ -25,7 +25,7 @@ import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
 object ReturnsRequests extends Configuration {
 
   val expectedTaxYearStart = EclTaxYear.currentFyStartYear.takeRight(2)
-  val taxYear = s"$expectedTaxYearStart XY".replaceAll("\\s", "")
+  val taxYear = s"${expectedTaxYearStart}XY"
 
   val startUrl: String                              = s"$returnAuthWizardUrl/period/$taxYear"
   val isRelevantAccountingPeriod12MonthsUrl: String = s"$returnAuthWizardUrl/is-relevant-accounting-period-12-months"
@@ -37,6 +37,7 @@ object ReturnsRequests extends Configuration {
   val contactEmailUrl: String                       = s"$returnAuthWizardUrl/contact-email-address"
   val contactTelephoneUrl: String                   = s"$returnAuthWizardUrl/contact-telephone"
   val checkYourAnswersUrl: String                   = s"$returnAuthWizardUrl/check-your-answers"
+  val ReturnSubmittedUrl: String                    = s"$returnAuthWizardUrl/confirmation"
 
   val navigateToStartReturn: HttpRequestBuilder =
     http("Navigate to Return start page")
@@ -44,7 +45,7 @@ object ReturnsRequests extends Configuration {
       .check(status.is(200))
 
   val navigateToIsRelevantAccountingPeriod12MonthsUrl: HttpRequestBuilder =
-    http("Navigate to Is relevant Accounting period 12 months")
+    http("Navigate to /is-relevant-accounting-period-12-months")
       .get(isRelevantAccountingPeriod12MonthsUrl)
       .check(status.is(200))
       .check(saveCsrfToken)
@@ -57,7 +58,7 @@ object ReturnsRequests extends Configuration {
       .check(status.is(303))
 
   val navigateToUkRevenueAccountingPeriod: HttpRequestBuilder =
-    http("Navigate to UK Revenue period")
+    http("Navigate to /uk-revenue-in-accounting-period")
       .get(ukRevenueInAccountingPeriodUrl)
       .check(status.is(200))
       .check(saveCsrfToken)
@@ -70,7 +71,7 @@ object ReturnsRequests extends Configuration {
       .check(status.is(303))
 
   val navigateToAmlRegulatedActivity: HttpRequestBuilder             =
-    http("Navigate to AML regulated activity")
+    http("Navigate to /aml-regulated-activity")
       .get(amlRegulatedActivityUrl)
       .check(status.is(200))
       .check(saveCsrfToken)
@@ -82,7 +83,7 @@ object ReturnsRequests extends Configuration {
       .check(status.is(303))
 
   val navigateToAmountDue: HttpRequestBuilder =
-    http("Navigate to AML Amount Due")
+    http("Navigate to /amount-due")
       .get(amountDueUrl)
       .check(status.is(200))
       .check(saveCsrfToken)
@@ -94,7 +95,7 @@ object ReturnsRequests extends Configuration {
       .check(status.is(303))
 
   val navigateToContactName: HttpRequestBuilder =
-    http("Navigate to Contact Name")
+    http("Navigate to /contact-name")
       .get(contactNameUrl)
       .check(status.is(200))
       .check(saveCsrfToken)
@@ -107,7 +108,7 @@ object ReturnsRequests extends Configuration {
       .check(status.is(303))
 
   val navigateToContactRole: HttpRequestBuilder =
-    http("Navigate to Contact Role")
+    http("Navigate to /contact-role")
       .get(contactRoleUrl)
       .check(status.is(200))
       .check(saveCsrfToken)
@@ -120,7 +121,7 @@ object ReturnsRequests extends Configuration {
       .check(status.is(303))
 
   val navigateToContactEmailAddress: HttpRequestBuilder =
-    http("Navigate to Contact Email")
+    http("Navigate to /contact-email-address")
       .get(contactEmailUrl)
       .check(status.is(200))
       .check(saveCsrfToken)
@@ -133,7 +134,7 @@ object ReturnsRequests extends Configuration {
       .check(status.is(303))
 
   val navigateToContactTelephone: HttpRequestBuilder =
-    http("Navigate to Contact Telephone")
+    http("Navigate to /contact-telephone")
       .get(contactTelephoneUrl)
       .check(status.is(200))
       .check(saveCsrfToken)
@@ -146,7 +147,7 @@ object ReturnsRequests extends Configuration {
       .check(status.is(303))
 
   val navigateToCheckYourAnswers: HttpRequestBuilder =
-    http("Navigate to Check your answers")
+    http("Navigate to /check-your-answers")
       .get(checkYourAnswersUrl)
       .check(status.is(200))
       .check(saveCsrfToken)
@@ -156,5 +157,10 @@ object ReturnsRequests extends Configuration {
       .post(checkYourAnswersUrl)
       .formParam("csrfToken", "${csrfToken}")
       .check(status.is(303))
+
+  val navigateToReturnSubmitted: HttpRequestBuilder =
+    http("Navigate to /return-submitted")
+      .get(ReturnSubmittedUrl)
+      .check(status.is(200))
 
 }

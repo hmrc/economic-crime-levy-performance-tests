@@ -28,10 +28,10 @@ object RegistrationRequests extends Configuration {
     s"$registrationUrl/$relativeLocation"
 
   val amlRegulatedActivityUrl: String            = s"$registerAuthWizardUrl/aml-regulated-activity-question"
-  val whoIsYourAmlSupervisorUrl: String          = s"$registerAuthWizardUrl/your-aml-supervisor/Initial"
+  val whoIsYourAmlSupervisorUrl: String          = s"$registerAuthWizardUrl/your-aml-supervisor/Initial?fromLiableBeforeCurrentYearPage=false"
   val relevantAccountingPeriodUrl: String        = s"$registerAuthWizardUrl/accounting-period-question"
   val ukRevenueForAccountingPeriodUrl: String    = s"$registerAuthWizardUrl/uk-revenue-in-accounting-period"
-  val previousFinancialYearUrl: String           = s"$registerAuthWizardUrl/previous-financial-year?fromRevenuePage=true"
+  val eclLiableForPreviousFinancialYearUrl: String  = s"$registerAuthWizardUrl/previous-financial-year?fromRevenuePage=true"
   val whatIsYourEntityType: String               = s"$registerAuthWizardUrl/what-is-your-entity-type"
   val stubGrsJourneyDataUrl: String              =
     s"$registerAuthWizardUrl/test-only/stub-grs-journey-data?continueUrl=normalmode&entityType=UkLimitedCompany"
@@ -102,15 +102,15 @@ object RegistrationRequests extends Configuration {
       .formParam("value", ukRevenue)
       .check(status.is(303))
 
-  val navigateToPreviousFinancialYear: HttpRequestBuilder =
-    http("Navigate to /previous-financial-year")
-      .get(previousFinancialYearUrl)
+  val navigateToEclLiableForPreviousFinancialYear: HttpRequestBuilder =
+    http("Navigate to /Liable for previous financial year")
+      .get(eclLiableForPreviousFinancialYearUrl)
       .check(status.is(200))
       .check(saveCsrfToken)
 
-  def submitLevyForPreviousFinancialYear(answer: String): HttpRequestBuilder =
-    http("Liable for Previous Financial Year: " + answer)
-      .post(previousFinancialYearUrl)
+  def submitEclLiableForPreviousFinancialYear(answer: String): HttpRequestBuilder =
+    http("Submit relevant accounting period: " + answer)
+      .post(eclLiableForPreviousFinancialYearUrl)
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", answer)
       .check(status.is(303))

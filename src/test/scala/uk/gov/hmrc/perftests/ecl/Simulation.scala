@@ -18,6 +18,8 @@ package uk.gov.hmrc.perftests.ecl
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.ecl.requests.AccountRequest._
+import uk.gov.hmrc.perftests.ecl.requests.AmendRegistrationRequests._
+import uk.gov.hmrc.perftests.ecl.requests.AmendReturnsRequests._
 import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
 import uk.gov.hmrc.perftests.ecl.requests.EnrolmentRequests._
 import uk.gov.hmrc.perftests.ecl.requests.RegistrationRequests._
@@ -28,7 +30,7 @@ class Simulation extends PerformanceTestRunner {
   setup("ecl-registration-login", "Login via Auth Wizard for registration").withRequests(
     navigateToRegisterAuthWizard,
     navigateToAuthWizardRedirectionUrl,
-    submitRegisterAuthWizardForm(),
+    submitRegisterAuthWizardForm()
   )
   setup("ecl-registration-journey", "Register for ECL").withActions(
     navigateToWhetherOrNotAmlActivityStartedInCurrentYear,
@@ -39,8 +41,8 @@ class Simulation extends PerformanceTestRunner {
     submitRelevantAccountingPeriod("true"),
     navigateToUkRevenueForAccountingPeriod,
     submitUkRevenueForAccountingPeriod("10200000"),
-    navigateToPreviousFinancialYear,
-    submitLevyForPreviousFinancialYear("true"),
+    navigateToEclLiableForPreviousFinancialYear,
+    submitEclLiableForPreviousFinancialYear("true"),
     navigateToEntityType,
     submitEntityType("UkLimitedCompany"),
     navigateToStubGrsJourneyData,
@@ -95,7 +97,8 @@ class Simulation extends PerformanceTestRunner {
     navigateToContactTelephone,
     submitContactTelephone("01475344272"),
     navigateToCheckYourAnswers,
-    submitCheckYourAnswersForReturns()
+    submitCheckYourAnswersForReturns(),
+    navigateToReturnSubmitted
   )
   setup("ecl-enrolment-journey", "Claim enrolment for ECL").withRequests(
     navigateToEnrolmentAuthWizard,
@@ -112,6 +115,67 @@ class Simulation extends PerformanceTestRunner {
     submitAccountAuthWizardForm(),
     navigateToYourEclReturns,
     navigateToSpecificReturn()
+  )
+  setup("ecl-amend-registration-journey", "Amend Registration for ECL").withRequests(
+    navigateToAccountAuthWizard,
+    submitAccountAuthWizardForm(),
+    navigateToEclAccount,
+    navigateToSubmitAmendRegistration,
+    navigateToAmendAmlSupervisor,
+    submitAmendAmlSupervisor("Hmrc"),
+    navigateToYourAmendBusinessSector,
+    submitYourAmendBusinessSector("Auditor"),
+    navigateToAmendFirstContactPersonName,
+    submitAmendFirstContactPersonName("James"),
+    navigateToAmendFirstContactPersonRole,
+    submitAmendFirstContactPersonRole("Compliance Office"),
+    navigateToAmendFirstContactPersonEmail,
+    submitAmendFirstContactPersonEmail("test@oc.com"),
+    navigateToAmendFirstContactPersonTelephone,
+    submitAmendFirstContactPersonTelephone("07291722122"),
+    navigateToAmendWouldYouLikeToAddAnotherContact,
+    submitAmendWouldYouLikeToAddAnotherContact("true"),
+    navigateToAmendSecondContactPersonName,
+    submitAmendSecondContactPersonName("Jon"),
+    navigateToAmendSecondContactPersonRole,
+    submitAmendSecondContactPersonRole("Accounts Director"),
+    navigateToAmendSecondContactPersonEmail,
+    submitAmendSecondContactPersonEmail("verify@oc.com"),
+    navigateToAmendSecondContactPersonTelephone,
+    submitAmendSecondContactPersonTelephone("0175344232"),
+    navigateToWhetherOrNotContactAddressInUk,
+    submitWhetherOrNotContactAddressInUk("true"),
+    navigateToStubAlfJourneyData,
+    submitStubAlfJourneyData(),
+    navigateToAlfContinue,
+    navigateToAmendSubmitCheckYourAnswers,
+    submitAmendCheckYourAnswers(),
+    navigateToAmendRegistrationSubmitted
+  )
+  setup("ecl-amend-returns-journey", "Amend ECL Returns").withRequests(
+    navigateToAccountAuthWizard,
+    submitAccountAuthWizardForm(),
+    navigateToYourEclReturns,
+    navigateToAmendStartReturn,
+    navigateToAmendIsRelevantAccountingPeriod12MonthsUrl,
+    submitAmendIsYourRelevantAccountingPeriod12Months("true"),
+    navigateToAmendUkRevenueAccountingPeriod,
+    submitAmendUkRevenueForTheRelevantAccountingPeriod("10200000"),
+    navigateToAmendAmlRegulatedActivity,
+    submitAmendAmlRegulatedActivity("true"),
+    navigateToAmendAmountDue,
+    submitAmendAmountDue(),
+    navigateToAmendContactName,
+    submitAmendContactName("Dan D"),
+    navigateToAmendContactRole,
+    submitAmendContactRole("Director"),
+    navigateToAmendContactEmailAddress,
+    submitAmendContactEmailAddress("verify@oc.com"),
+    navigateToAmendContactTelephone,
+    submitAmendContactTelephone("01475322272"),
+    navigateToAmendCheckYourAnswers,
+    submitAmendCheckYourAnswersForReturns(),
+    navigateToAmendReturnSubmitted
   )
   runSimulation()
 }

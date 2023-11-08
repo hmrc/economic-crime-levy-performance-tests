@@ -74,19 +74,6 @@ object AuthRequests extends Configuration {
       .check(status.is(303))
       .check(header("Location").is(authWizardRegisterRedirectionUrl))
 
-  val navigateToEclBetaAccess: HttpRequestBuilder =
-    http("Navigate to /ecl Beta Access")
-      .get(eclBetaAccessUrl)
-      .check(status.is(200))
-      .check(saveCsrfToken)
-
-  def submitEclBetaAccess(accessCode: String): HttpRequestBuilder =
-    http("ECL Access code: " + accessCode)
-      .post(eclBetaAccessUrl)
-      .formParam("csrfToken", "${csrfToken}")
-      .formParam("value", accessCode)
-      .check(status.is(303))
-
   val navigateToReturnAuthWizard: HttpRequestBuilder =
     http("Navigate to auth wizard return redirection url")
       .get(returnAuthWizardUrl+"/period/22XY")
@@ -173,10 +160,10 @@ object AuthRequests extends Configuration {
       .get(accountAuthWizardUrl)
       .check(status.is(303))
 
+  val identifierValue: String = "XMECL0000000005"
   def submitAccountAuthWizardForm(
     enrolmentKey: String = "HMRC-ECL-ORG",
     identifierName: String = "EclRegistrationReference",
-    identifierValue: String = "XMECL0000000005"
     ): HttpRequestBuilder =
     http("Log in with redirection url")
       .post(authWizardUrl)
