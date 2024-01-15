@@ -34,6 +34,7 @@ object AmendRegistrationRequests extends Configuration {
   val stubAlfJourneyDataUrl: String =
     s"$registerAuthWizardUrl/test-only/stub-alf-journey-data?continueUrl=normalmode"
   val amendRegistrationSubmittedUrl: String      = s"$registerAuthWizardUrl/amend-economic-crime-levy-registration/success/confirmation"
+  val ReasonForAmendRegistrationUrl: String      = s"$registerAuthWizardUrl/why-are-you-amending-your-registration"
 
 
   val navigateToEclAccount: HttpRequestBuilder =
@@ -45,6 +46,19 @@ object AmendRegistrationRequests extends Configuration {
     http(s"Navigate to /amend-economic-crime-levy-registration/$identifierValue")
       .get(amendEclRegistrationUrl)
       .check(status.is(200))
+
+  val navigateToReasonForAmendRegistration: HttpRequestBuilder =
+    http("Navigate to Reason for Amend return start page")
+      .get(ReasonForAmendRegistrationUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+
+  def submitReasonForAmendRegistration(reason: String): HttpRequestBuilder =
+    http("Submit reason for amend registration: " + reason)
+      .post(ReasonForAmendRegistrationUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value", reason)
+      .check(status.is(303))
 
   val navigateToAmendAmlSupervisor: HttpRequestBuilder =
     http("Navigate to /who-is-your-aml-supervisor/Amendment")
