@@ -26,11 +26,25 @@ object AmendReturnsRequests extends Configuration {
 
   val startAmendReturnUrl: String          = s"$returnAuthWizardUrl/amend/22XY/XMECL0000000006"
   val amendReturnSubmittedUrl: String      = s"$returnAuthWizardUrl/amend/confirmation"
+  val ReasonForAmendReturnUrl: String      = s"$returnAuthWizardUrl/can-you-provide-more-detail"
 
   val navigateToAmendStartReturn: HttpRequestBuilder =
     http("Navigate to Amend return start page")
       .get(startAmendReturnUrl)
       .check(status.is(200))
+
+  val navigateToReasonForAmendReturn: HttpRequestBuilder =
+    http("Navigate to Reason for Amend return start page")
+      .get(ReasonForAmendReturnUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+
+  def submitReasonForAmendReturns(reason: String): HttpRequestBuilder =
+    http("Submit reason for amend registration: " + reason)
+      .post(ReasonForAmendReturnUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value", reason)
+      .check(status.is(303))
 
   val navigateToAmendIsRelevantAccountingPeriod12MonthsUrl: HttpRequestBuilder =
     http("Navigate to amend /is-relevant-accounting-period-12-months")
