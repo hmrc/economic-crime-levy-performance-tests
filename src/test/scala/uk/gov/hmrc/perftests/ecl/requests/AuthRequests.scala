@@ -160,12 +160,9 @@ object AuthRequests extends Configuration {
       .get(accountAuthWizardUrl)
       .check(status.is(303))
 
-  val identifierValue: String = "XMECL0000000005"
   def submitAccountAuthWizardForm(
-    enrolmentKey: String = "HMRC-ECL-ORG",
-    identifierName: String = "EclRegistrationReference",
-    ): HttpRequestBuilder =
-    http("Log in with redirection url")
+    enrolmentKey: String, identifierName: String, identifierValue: String): HttpRequestBuilder =
+    http("Log in with account dashboard redirection url")
       .post(authWizardUrl)
       .formParam("authorityId", "")
       .formParam("gatewayToken", "")
