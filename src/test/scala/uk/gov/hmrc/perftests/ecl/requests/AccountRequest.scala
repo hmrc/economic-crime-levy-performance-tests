@@ -22,15 +22,13 @@ import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.perftests.ecl.Configuration
 import uk.gov.hmrc.perftests.ecl.requests.AuthRequests.{accountAuthWizardUrl, returnAuthWizardUrl}
 
-
-object AccountRequest extends Configuration{
+object AccountRequest extends Configuration {
 
   val expectedTaxYearStart = EclTaxYear.currentFyStartYear.takeRight(2)
-  val taxYear = s"${expectedTaxYearStart}XY"
+  val taxYear              = s"${expectedTaxYearStart}XY"
 
-  val viewYourReturnsUrl: String           = s"$accountAuthWizardUrl/your-ecl-returns"
-  val startSubmitReturnUrl: String         = s"$returnAuthWizardUrl/period"
-
+  val viewYourReturnsUrl: String   = s"$accountAuthWizardUrl/your-ecl-returns"
+  val startSubmitReturnUrl: String = s"$returnAuthWizardUrl/period"
 
   val navigateToYourEclReturns: HttpRequestBuilder =
     http("Navigate to /your-ecl-returns")

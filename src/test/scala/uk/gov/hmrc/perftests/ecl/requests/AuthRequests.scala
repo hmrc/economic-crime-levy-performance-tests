@@ -76,7 +76,7 @@ object AuthRequests extends Configuration {
 
   val navigateToReturnAuthWizard: HttpRequestBuilder =
     http("Navigate to auth wizard return redirection url")
-      .get(returnAuthWizardUrl+"/period/22XY")
+      .get(returnAuthWizardUrl + "/period/22XY")
       .check(status.is(303))
 
   def submitReturnsAuthWizardForm(
@@ -88,7 +88,7 @@ object AuthRequests extends Configuration {
       .post(authWizardUrl)
       .formParam("authorityId", "")
       .formParam("gatewayToken", "")
-      .formParam("redirectionUrl", returnAuthWizardUrl+"/period/22XY")
+      .formParam("redirectionUrl", returnAuthWizardUrl + "/period/22XY")
       .formParam("credentialStrength", "strong")
       .formParam("confidenceLevel", "50")
       .formParam("affinityGroup", "Individual")
@@ -116,7 +116,7 @@ object AuthRequests extends Configuration {
       .formParam("enrolment[3].taxIdentifier[0].value", "")
       .formParam("enrolment[3].state", "Activated")
       .check(status.is(303))
-      .check(header("Location").is(returnAuthWizardUrl+"/period/22XY"))
+      .check(header("Location").is(returnAuthWizardUrl + "/period/22XY"))
 
   val navigateToEnrolmentAuthWizard: HttpRequestBuilder =
     http("Navigate to auth wizard enrolment redirection url")
@@ -161,7 +161,10 @@ object AuthRequests extends Configuration {
       .check(status.is(303))
 
   def submitAccountAuthWizardForm(
-    enrolmentKey: String, identifierName: String, identifierValue: String): HttpRequestBuilder =
+    enrolmentKey: String,
+    identifierName: String,
+    identifierValue: String
+  ): HttpRequestBuilder =
     http("Log in with account dashboard redirection url")
       .post(authWizardUrl)
       .formParam("authorityId", "")

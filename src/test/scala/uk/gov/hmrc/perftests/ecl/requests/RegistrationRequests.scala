@@ -27,27 +27,29 @@ object RegistrationRequests extends Configuration {
   def redirectLocation(relativeLocation: String): String =
     s"$registrationUrl/$relativeLocation"
 
-  val amlRegulatedActivityUrl: String            = s"$registerAuthWizardUrl/aml-regulated-activity-question"
-  val whoIsYourAmlSupervisorUrl: String          = s"$registerAuthWizardUrl/your-aml-supervisor/Initial?fromLiableBeforeCurrentYearPage=false"
-  val relevantAccountingPeriodUrl: String        = s"$registerAuthWizardUrl/accounting-period-question"
-  val ukRevenueForAccountingPeriodUrl: String    = s"$registerAuthWizardUrl/uk-revenue-in-accounting-period"
-  val eclLiableForPreviousFinancialYearUrl: String  = s"$registerAuthWizardUrl/previous-financial-year?fromRevenuePage=true"
-  val whatIsYourEntityType: String               = s"$registerAuthWizardUrl/what-is-your-entity-type"
-  val stubGrsJourneyDataUrl: String              =
+  val amlRegulatedActivityUrl: String              = s"$registerAuthWizardUrl/aml-regulated-activity-question"
+  val whoIsYourAmlSupervisorUrl: String            =
+    s"$registerAuthWizardUrl/your-aml-supervisor/Initial?fromLiableBeforeCurrentYearPage=false"
+  val relevantAccountingPeriodUrl: String          = s"$registerAuthWizardUrl/accounting-period-question"
+  val ukRevenueForAccountingPeriodUrl: String      = s"$registerAuthWizardUrl/uk-revenue-in-accounting-period"
+  val eclLiableForPreviousFinancialYearUrl: String =
+    s"$registerAuthWizardUrl/previous-financial-year?fromRevenuePage=true"
+  val whatIsYourEntityType: String                 = s"$registerAuthWizardUrl/what-is-your-entity-type"
+  val stubGrsJourneyDataUrl: String                =
     s"$registerAuthWizardUrl/test-only/stub-grs-journey-data?continueUrl=normalmode&entityType=UkLimitedCompany"
-  val whatIsYourBusinessSectorUrl: String        = s"$registerAuthWizardUrl/what-is-your-business-sector"
-  val firstContactPersonNameUrl: String          = s"$registerAuthWizardUrl/contact-name"
-  val firstContactPersonRoleUrl: String          = s"$registerAuthWizardUrl/contact-role"
-  val firstContactPersonEmailUrl: String         = s"$registerAuthWizardUrl/contact-email-address"
-  val firstContactPersonTelephoneUrl: String     = s"$registerAuthWizardUrl/contact-telephone"
-  val wouldYouLikeToAddAnotherContactUrl: String = s"$registerAuthWizardUrl/second-contact"
-  val secondContactPersonNameUrl: String         = s"$registerAuthWizardUrl/second-contact-name"
-  val secondContactPersonRoleUrl: String         = s"$registerAuthWizardUrl/second-contact-role"
-  val secondContactPersonEmailUrl: String        = s"$registerAuthWizardUrl/second-contact-email-address"
-  val secondContactPersonTelephoneUrl: String    = s"$registerAuthWizardUrl/second-contact-telephone"
-  val registeredContactAddressUrl: String        = s"$registerAuthWizardUrl/contact-address"
-  val submitCheckYourAnswersUrl: String          = s"$registerAuthWizardUrl/check-your-answers"
-  val registrationSubmittedUrl: String           = s"$registerAuthWizardUrl/registration-submitted"
+  val whatIsYourBusinessSectorUrl: String          = s"$registerAuthWizardUrl/what-is-your-business-sector"
+  val firstContactPersonNameUrl: String            = s"$registerAuthWizardUrl/contact-name"
+  val firstContactPersonRoleUrl: String            = s"$registerAuthWizardUrl/contact-role"
+  val firstContactPersonEmailUrl: String           = s"$registerAuthWizardUrl/contact-email-address"
+  val firstContactPersonTelephoneUrl: String       = s"$registerAuthWizardUrl/contact-telephone"
+  val wouldYouLikeToAddAnotherContactUrl: String   = s"$registerAuthWizardUrl/second-contact"
+  val secondContactPersonNameUrl: String           = s"$registerAuthWizardUrl/second-contact-name"
+  val secondContactPersonRoleUrl: String           = s"$registerAuthWizardUrl/second-contact-role"
+  val secondContactPersonEmailUrl: String          = s"$registerAuthWizardUrl/second-contact-email-address"
+  val secondContactPersonTelephoneUrl: String      = s"$registerAuthWizardUrl/second-contact-telephone"
+  val registeredContactAddressUrl: String          = s"$registerAuthWizardUrl/contact-address"
+  val submitCheckYourAnswersUrl: String            = s"$registerAuthWizardUrl/check-your-answers"
+  val registrationSubmittedUrl: String             = s"$registerAuthWizardUrl/registration-submitted"
 
   val navigateToWhetherOrNotAmlActivityStartedInCurrentYear: HttpRequestBuilder =
     http("Navigate to /did-you-carry-out-aml-regulated-activity")

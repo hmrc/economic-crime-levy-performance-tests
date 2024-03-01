@@ -24,9 +24,9 @@ import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
 
 object AmendReturnsRequests extends Configuration {
 
-  val startAmendReturnUrl: String          = s"$returnAuthWizardUrl/amend/22XY/XMECL0000000006"
-  val amendReturnSubmittedUrl: String      = s"$returnAuthWizardUrl/amend/confirmation"
-  val ReasonForAmendReturnUrl: String      = s"$returnAuthWizardUrl/change-answer/can-you-provide-more-detail"
+  val startAmendReturnUrl: String     = s"$returnAuthWizardUrl/amend/22XY/XMECL0000000006"
+  val amendReturnSubmittedUrl: String = s"$returnAuthWizardUrl/amend/confirmation"
+  val ReasonForAmendReturnUrl: String = s"$returnAuthWizardUrl/change-answer/can-you-provide-more-detail"
 
   val navigateToAmendStartReturn: HttpRequestBuilder =
     http("Navigate to Amend return start page")
@@ -45,7 +45,6 @@ object AmendReturnsRequests extends Configuration {
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", reason)
       .check(status.is(303))
-
 
   val navigateToAmendCheckYourAnswers: HttpRequestBuilder =
     http("Navigate to amend /check-your-answers")
