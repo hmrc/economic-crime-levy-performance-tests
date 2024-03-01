@@ -24,17 +24,11 @@ import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
 
 object AmendRegistrationRequests extends Configuration {
 
-  def redirectLocation(relativeLocation: String): String =
-    s"$registrationUrl/$relativeLocation"
-
-  val amendEclRegistrationUrl: String            = s"$registerAuthWizardUrl/amend-economic-crime-levy-registration/XMECL0000000002"
-  val whoIsYourAmendAmlSupervisorUrl: String     = s"$registerAuthWizardUrl/your-aml-supervisor/Amendment?fromLiableBeforeCurrentYearPage=false"
-  val contactUkAddressUrl: String                = s"$registerAuthWizardUrl/uk-address"
-  val stubAlfJourneyDataUrl: String =
-    s"$registerAuthWizardUrl/test-only/stub-alf-journey-data?continueUrl=normalmode"
-  val amendRegistrationSubmittedUrl: String      = s"$registerAuthWizardUrl/amend-economic-crime-levy-registration/success/confirmation"
-  val ReasonForAmendRegistrationUrl: String      = s"$registerAuthWizardUrl/change-answer/why-are-you-amending-your-registration"
-
+  val amendEclRegistrationUrl: String       = s"$registerAuthWizardUrl/amend-economic-crime-levy-registration/XMECL0000000002"
+  val amendRegistrationSubmittedUrl: String =
+    s"$registerAuthWizardUrl/amend-economic-crime-levy-registration/success/confirmation"
+  val ReasonForAmendRegistrationUrl: String =
+    s"$registerAuthWizardUrl/change-answer/why-are-you-amending-your-registration"
 
   val navigateToEclAccount: HttpRequestBuilder =
     http(s"Navigate to /amend-economic-crime-levy-registration/XMECL0000000002")
@@ -59,7 +53,7 @@ object AmendRegistrationRequests extends Configuration {
       .formParam("value", reason)
       .check(status.is(303))
 
-    val navigateToAmendSubmitCheckYourAnswers: HttpRequestBuilder =
+  val navigateToAmendSubmitCheckYourAnswers: HttpRequestBuilder =
     http("Navigate to amend /check-your-answers")
       .get(RegistrationRequests.submitCheckYourAnswersUrl)
       .check(status.is(200))

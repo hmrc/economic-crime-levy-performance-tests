@@ -24,9 +24,8 @@ import uk.gov.hmrc.perftests.ecl.requests.AuthRequests.enrolmentAuthWizardUrl
 
 object EnrolmentRequests extends Configuration {
 
-  val yourEclReferenceNumberUrl: String = s"$enrolmentUrl/add-economic-crime-levy/your-ecl-reference-number/"
+  val yourEclReferenceNumberUrl: String  = s"$enrolmentUrl/add-economic-crime-levy/your-ecl-reference-number/"
   val yourEclRegistrationDateUrl: String = s"$enrolmentUrl/add-economic-crime-levy/ecl-registration-date/"
-
 
   val navigateToDoYouHaveAnEclReferenceNumber: HttpRequestBuilder =
     http("Navigate to /do-you-have-an-ecl-reference-number")
@@ -60,7 +59,11 @@ object EnrolmentRequests extends Configuration {
       .check(status.is(200))
       .check(saveCsrfToken)
 
-  def submitYourEclRegistrationDate(eclRegistrationDate: String, eclRegistrationMonth: String, eclRegistrationYear: String): HttpRequestBuilder =
+  def submitYourEclRegistrationDate(
+    eclRegistrationDate: String,
+    eclRegistrationMonth: String,
+    eclRegistrationYear: String
+  ): HttpRequestBuilder =
     http("Your ECL registration date: " + eclRegistrationDate + "/" + eclRegistrationMonth + "/" + eclRegistrationYear)
       .post(yourEclRegistrationDateUrl)
       .formParam("csrfToken", "${csrfToken}")
