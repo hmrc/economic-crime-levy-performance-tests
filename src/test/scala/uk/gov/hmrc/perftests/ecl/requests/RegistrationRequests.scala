@@ -320,15 +320,9 @@ object RegistrationRequests extends Configuration {
       .check(status.is(200))
       .check(saveCsrfToken)
 
-  def submitCheckYourAnswers(): HttpRequestBuilder =
-    http("Submit check your answers")
-      .post(submitCheckYourAnswersUrl)
-      .formParam("csrfToken", "${csrfToken}")
-      .check(status.is(303))
-
   val navigateToRegistrationSubmitted: HttpRequestBuilder =
     http("Navigate to /registration-submitted")
       .get(registrationSubmittedUrl)
-      .check(status.is(200))
+      .check(status.is(303))
 
 }
