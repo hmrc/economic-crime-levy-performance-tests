@@ -72,7 +72,6 @@ class Simulation extends PerformanceTestRunner {
     navigateToRegisteredContactAddress,
     submitRegisteredContactAddress("true"),
     navigateToSubmitCheckYourAnswers,
-    submitCheckYourAnswers(),
     navigateToRegistrationSubmitted
   )
   setup("ecl-returns-login", "Log in via Auth Wizard for returns").withRequests(
