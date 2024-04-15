@@ -26,7 +26,8 @@ object AmendReturnsRequests extends Configuration {
 
   val startAmendReturnUrl: String     = s"$returnAuthWizardUrl/amend/22XY/XMECL0000000006"
   val amendReturnSubmittedUrl: String = s"$returnAuthWizardUrl/amend/confirmation"
-  val ReasonForAmendReturnUrl: String = s"$returnAuthWizardUrl/change-answer/can-you-provide-more-detail"
+  val reasonForAmendReturnUrl: String = s"$returnAuthWizardUrl/change-answer/can-you-provide-more-detail"
+  val changeContactNameUrl: String    = s"$returnAuthWizardUrl/change-answer/contact-name"
 
   val navigateToAmendStartReturn: HttpRequestBuilder =
     http("Navigate to Amend return start page")
@@ -35,13 +36,13 @@ object AmendReturnsRequests extends Configuration {
 
   val navigateToReasonForAmendReturn: HttpRequestBuilder =
     http("Navigate to Reason for Amend return start page")
-      .get(ReasonForAmendReturnUrl)
+      .get(reasonForAmendReturnUrl)
       .check(status.is(200))
       .check(saveCsrfToken)
 
   def submitReasonForAmendReturns(reason: String): HttpRequestBuilder =
     http("Submit reason for amend registration: " + reason)
-      .post(ReasonForAmendReturnUrl)
+      .post(reasonForAmendReturnUrl)
       .formParam("csrfToken", "${csrfToken}")
       .formParam("value", reason)
       .check(status.is(303))
@@ -56,6 +57,19 @@ object AmendReturnsRequests extends Configuration {
     http("Amend Check Your Answers")
       .post(ReturnsRequests.checkYourAnswersUrl)
       .formParam("csrfToken", "${csrfToken}")
+      .check(status.is(303))
+
+  val navigateToChangeContactName: HttpRequestBuilder =
+    http("Navigate to /amount-due")
+      .get(changeContactNameUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+
+  def submitChangeContactName(changeContactName: String): HttpRequestBuilder =
+    http("Change Contact Name: " + changeContactName)
+      .post(changeContactNameUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value", changeContactName)
       .check(status.is(303))
 
   val navigateToAmendReturnSubmitted: HttpRequestBuilder =

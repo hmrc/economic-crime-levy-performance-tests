@@ -27,6 +27,7 @@ object RegistrationRequests extends Configuration {
   def redirectLocation(relativeLocation: String): String =
     s"$registrationUrl/$relativeLocation"
 
+  val registerForCurrentFinancialYearUrl: String   = s"$registerAuthWizardUrl/register-for-current-financial-year"
   val amlRegulatedActivityUrl: String              = s"$registerAuthWizardUrl/aml-regulated-activity-question"
   val whoIsYourAmlSupervisorUrl: String            =
     s"$registerAuthWizardUrl/your-aml-supervisor/Initial?fromLiableBeforeCurrentYearPage=false"
@@ -48,8 +49,21 @@ object RegistrationRequests extends Configuration {
   val secondContactPersonEmailUrl: String          = s"$registerAuthWizardUrl/second-contact-email-address"
   val secondContactPersonTelephoneUrl: String      = s"$registerAuthWizardUrl/second-contact-telephone"
   val registeredContactAddressUrl: String          = s"$registerAuthWizardUrl/contact-address"
-  val submitCheckYourAnswersUrl: String            = s"$registerAuthWizardUrl/check-your-answers"
+  val submitCheckYourAnswersUrl: String            = s"$registerAuthWizardUrl/check-your-answers?registrationType=Initial"
   val registrationSubmittedUrl: String             = s"$registerAuthWizardUrl/registration-submitted"
+
+  val navigateToWhetherOrNotRegisterForCurrentFinancialYear: HttpRequestBuilder =
+    http("Navigate to /register-for-current-financial-year")
+      .get(registerForCurrentFinancialYearUrl)
+      .check(status.is(200))
+      .check(saveCsrfToken)
+
+  def submitWhetherOrNotRegisterForCurrentFinancialYear(answer: String): HttpRequestBuilder =
+    http("Did you carry out AML regulated activity" + answer)
+      .post(registerForCurrentFinancialYearUrl)
+      .formParam("csrfToken", "${csrfToken}")
+      .formParam("value", answer)
+      .check(status.is(303))
 
   val navigateToWhetherOrNotAmlActivityStartedInCurrentYear: HttpRequestBuilder =
     http("Navigate to /did-you-carry-out-aml-regulated-activity")
