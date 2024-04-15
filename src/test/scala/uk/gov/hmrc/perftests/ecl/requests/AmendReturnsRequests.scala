@@ -47,12 +47,6 @@ object AmendReturnsRequests extends Configuration {
       .formParam("value", reason)
       .check(status.is(303))
 
-  val navigateToAmendCheckYourAnswers: HttpRequestBuilder =
-    http("Navigate to amend /check-your-answers")
-      .get(ReturnsRequests.checkYourAnswersUrl)
-      .check(status.is(200))
-      .check(saveCsrfToken)
-
   def submitAmendCheckYourAnswersForReturns(): HttpRequestBuilder =
     http("Amend Check Your Answers")
       .post(ReturnsRequests.checkYourAnswersUrl)
