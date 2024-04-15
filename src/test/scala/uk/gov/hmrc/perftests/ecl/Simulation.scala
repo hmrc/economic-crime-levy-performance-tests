@@ -125,6 +125,8 @@ class Simulation extends PerformanceTestRunner {
     submitReasonForAmendRegistration("Revenue changed for the current FY"),
     navigateToAmendSubmitCheckYourAnswers,
     submitAmendCheckYourAnswers(),
+    navigateToChangeContactNameForRegistration,
+    submitChangeContactNameForRegistration("Peter Smith"),
     navigateToAmendRegistrationSubmitted
   )
   setup("ecl-amend-returns-journey", "Amend ECL Returns").withRequests(
@@ -136,6 +138,8 @@ class Simulation extends PerformanceTestRunner {
     submitReasonForAmendReturns("Revenue changed for the current FY"),
     navigateToAmendCheckYourAnswers,
     submitAmendCheckYourAnswersForReturns(),
+    navigateToChangeContactName,
+    submitChangeContactName("James Bond"),
     navigateToAmendReturnSubmitted
   )
   setup("ecl-deregister-journey", "Deregister for ECL").withRequests(

@@ -37,7 +37,7 @@ object ReturnsRequests extends Configuration {
   val contactEmailUrl: String                       = s"$returnAuthWizardUrl/contact-email-address"
   val contactTelephoneUrl: String                   = s"$returnAuthWizardUrl/contact-telephone"
   val checkYourAnswersUrl: String                   = s"$returnAuthWizardUrl/check-your-answers"
-  val ReturnSubmittedUrl: String                    = s"$returnAuthWizardUrl/confirmation"
+  val returnSubmittedUrl: String                    = s"$returnAuthWizardUrl/confirmation"
 
   val navigateToStartReturn: HttpRequestBuilder =
     http("Navigate to Return start page")
@@ -160,7 +160,7 @@ object ReturnsRequests extends Configuration {
 
   val navigateToReturnSubmitted: HttpRequestBuilder =
     http("Navigate to /return-submitted")
-      .get(ReturnSubmittedUrl)
+      .get(returnSubmittedUrl)
       .check(status.is(200))
 
 }
