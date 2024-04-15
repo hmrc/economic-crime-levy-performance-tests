@@ -96,7 +96,6 @@ class Simulation extends PerformanceTestRunner {
     submitContactEmailAddress("test@oc.com"),
     navigateToContactTelephone,
     submitContactTelephone("01475344272"),
-    navigateToCheckYourAnswers,
     submitCheckYourAnswersForReturns(),
     navigateToReturnSubmitted
   )
@@ -123,7 +122,6 @@ class Simulation extends PerformanceTestRunner {
     navigateToSubmitAmendRegistration,
     navigateToReasonForAmendRegistration,
     submitReasonForAmendRegistration("Revenue changed for the current FY"),
-    navigateToAmendSubmitCheckYourAnswers,
     submitAmendCheckYourAnswers(),
     navigateToChangeContactNameForRegistration,
     submitChangeContactNameForRegistration("Peter Smith"),
@@ -136,7 +134,6 @@ class Simulation extends PerformanceTestRunner {
     navigateToAmendStartReturn,
     navigateToReasonForAmendReturn,
     submitReasonForAmendReturns("Revenue changed for the current FY"),
-    navigateToAmendCheckYourAnswers,
     submitAmendCheckYourAnswersForReturns(),
     navigateToChangeContactName,
     submitChangeContactName("James Bond"),

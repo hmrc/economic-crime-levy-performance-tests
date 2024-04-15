@@ -146,12 +146,6 @@ object ReturnsRequests extends Configuration {
       .formParam("value", contactTelephone)
       .check(status.is(303))
 
-  val navigateToCheckYourAnswers: HttpRequestBuilder =
-    http("Navigate to /check-your-answers")
-      .get(checkYourAnswersUrl)
-      .check(status.is(200))
-      .check(saveCsrfToken)
-
   def submitCheckYourAnswersForReturns(): HttpRequestBuilder =
     http("Check Your Answers")
       .post(checkYourAnswersUrl)
