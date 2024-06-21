@@ -6,11 +6,11 @@ Performance test suite for the Economic Crime Levy project, using [performance-t
 Prior to executing the tests ensure you have:
 
 * Mongo running on your machine
-* ECL services running on your machine via service manager
+* ECL services running on your machine via sm2
 
 Run the following command to start all the ECL services locally:
 ```
-sm --start ECONOMIC_CRIME_LEVY_ALL -r
+sm2 --start ECONOMIC_CRIME_LEVY_ALL -r
 ```
 
 ## Logging
