@@ -69,6 +69,7 @@ object AuthRequests extends Configuration {
       .formParam("enrolment[3].taxIdentifier[0].name", "")
       .formParam("enrolment[3].taxIdentifier[0].value", "")
       .formParam("enrolment[3].state", "Activated")
+      .formParam("csrfToken", "${csrfToken}")
       .check(status.is(303))
       .check(header("Location").is(authWizardRegisterRedirectionUrl))
 
@@ -113,6 +114,7 @@ object AuthRequests extends Configuration {
       .formParam("enrolment[3].taxIdentifier[0].name", "")
       .formParam("enrolment[3].taxIdentifier[0].value", "")
       .formParam("enrolment[3].state", "Activated")
+      .formParam("csrfToken", "${csrfToken}")
       .check(status.is(303))
       .check(header("Location").is(returnAuthWizardUrl + "/period/23XY"))
 
@@ -150,6 +152,7 @@ object AuthRequests extends Configuration {
       .formParam("enrolment[3].taxIdentifier[0].name", "")
       .formParam("enrolment[3].taxIdentifier[0].value", "")
       .formParam("enrolment[3].state", "Activated")
+      .formParam("csrfToken", "${csrfToken}")
       .check(status.is(303))
       .check(header("Location").is(enrolmentAuthWizardUrl))
 
@@ -194,6 +197,7 @@ object AuthRequests extends Configuration {
       .formParam("enrolment[3].taxIdentifier[0].name", "")
       .formParam("enrolment[3].taxIdentifier[0].value", "")
       .formParam("enrolment[3].state", "Activated")
+      .formParam("csrfToken", "${csrfToken}")
       .check(status.is(303))
       .check(header("Location").is(accountAuthWizardUrl))
 

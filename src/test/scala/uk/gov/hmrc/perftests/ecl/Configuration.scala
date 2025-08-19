@@ -17,8 +17,11 @@
 package uk.gov.hmrc.perftests.ecl
 
 import io.gatling.core.Predef._
+import io.gatling.core.check.CheckBuilder
+import io.gatling.core.check.css.CssCheckType
 import io.gatling.http.Predef._
 import io.gatling.http.check.HttpCheck
+import jodd.lagarto.dom.NodeSelector
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
 trait Configuration extends ServicesConfiguration {
@@ -29,11 +32,9 @@ trait Configuration extends ServicesConfiguration {
   val enrolmentUrl: String    = baseUrlFor("economic-crime-levy-enrolment-frontend")
   val accountUrl: String      = baseUrlFor("economic-crime-levy-account-frontend")
 
-  private val csrfTokenPattern: String    = """<input type="hidden" name="csrfToken"\s+value="([^"]+)""""
   private val grsJourneyIdPattern: String = """.*journeyId=(.*)"""
 
-  def saveCsrfToken: HttpCheck =
-    regex(_ => csrfTokenPattern).saveAs("csrfToken")
+  def saveCsrfToken: CheckBuilder[CssCheckType, NodeSelector, String] = css("input[name='csrfToken']", "value").optional.saveAs("csrfToken")
 
   def saveGrsJourneyId: HttpCheck =
     headerRegex("location", grsJourneyIdPattern).saveAs("grsJourneyId")
