@@ -61,7 +61,7 @@ object RegistrationRequests extends Configuration {
   def submitWhetherOrNotRegisterForCurrentFinancialYear(answer: String): HttpRequestBuilder =
     http("Did you carry out AML regulated activity" + answer)
       .post(registerForCurrentFinancialYearUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", answer)
       .check(status.is(303))
 
@@ -74,7 +74,7 @@ object RegistrationRequests extends Configuration {
   def submitWhetherOrNotAmlActivityStartedInCurrentYear(answer: String): HttpRequestBuilder =
     http("Did you carry out AML regulated activity" + answer)
       .post(amlRegulatedActivityUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", answer)
       .check(status.is(303))
 
@@ -87,7 +87,7 @@ object RegistrationRequests extends Configuration {
   def submitAmlSupervisor(amlSupervisor: String): HttpRequestBuilder =
     http("Submit AML Supervisor: " + amlSupervisor)
       .post(whoIsYourAmlSupervisorUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", amlSupervisor)
       .formParam("otherProfessionalBody", "")
       .check(status.is(303))
@@ -101,7 +101,7 @@ object RegistrationRequests extends Configuration {
   def submitRelevantAccountingPeriod(answer: String): HttpRequestBuilder =
     http("Submit relevant accounting period: " + answer)
       .post(relevantAccountingPeriodUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", answer)
       .check(status.is(303))
 
@@ -114,7 +114,7 @@ object RegistrationRequests extends Configuration {
   def submitUkRevenueForAccountingPeriod(ukRevenue: String): HttpRequestBuilder =
     http("Submit UK Revenue for relevant accounting period: " + ukRevenue)
       .post(ukRevenueForAccountingPeriodUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", ukRevenue)
       .check(status.is(303))
 
@@ -127,7 +127,7 @@ object RegistrationRequests extends Configuration {
   def submitEclLiableForPreviousFinancialYear(answer: String): HttpRequestBuilder =
     http("Submit relevant accounting period: " + answer)
       .post(eclLiableForPreviousFinancialYearUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", answer)
       .check(status.is(303))
 
@@ -140,7 +140,7 @@ object RegistrationRequests extends Configuration {
   def submitEntityType(entityType: String): HttpRequestBuilder =
     http("Submit Entity Type: " + entityType)
       .post(whatIsYourEntityType)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", entityType)
       .check(status.is(303))
 
@@ -158,7 +158,7 @@ object RegistrationRequests extends Configuration {
   def submitStubGrsJourneyData(): HttpRequestBuilder =
     http("Stub GRS Journey Data")
       .post(stubGrsJourneyDataUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam(
         "grsJourneyDataJson",
         """{
@@ -195,7 +195,7 @@ object RegistrationRequests extends Configuration {
   def submitWhatIsYourBusinessSector(businessSector: String): HttpRequestBuilder =
     http("Submit Business sector: " + businessSector)
       .post(whatIsYourBusinessSectorUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", businessSector)
       .check(status.is(303))
 
@@ -208,7 +208,7 @@ object RegistrationRequests extends Configuration {
   def submitFirstContactPersonName(contactName: String): HttpRequestBuilder =
     http("Submit contact person's Name: " + contactName)
       .post(firstContactPersonNameUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", contactName)
       .check(status.is(303))
 
@@ -221,7 +221,7 @@ object RegistrationRequests extends Configuration {
   def submitFirstContactPersonRole(contactRole: String): HttpRequestBuilder =
     http("Submit contact person's Role: " + contactRole)
       .post(firstContactPersonRoleUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", contactRole)
       .check(status.is(303))
 
@@ -234,7 +234,7 @@ object RegistrationRequests extends Configuration {
   def submitFirstContactPersonEmail(emailAddress: String): HttpRequestBuilder =
     http("Submit contact person's Email address: " + emailAddress)
       .post(firstContactPersonEmailUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", emailAddress)
       .check(status.is(303))
 
@@ -247,7 +247,7 @@ object RegistrationRequests extends Configuration {
   def submitFirstContactPersonTelephone(contactNumber: String): HttpRequestBuilder =
     http("Submit contact person's Telephone: " + contactNumber)
       .post(firstContactPersonTelephoneUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", contactNumber)
       .check(status.is(303))
 
@@ -259,7 +259,7 @@ object RegistrationRequests extends Configuration {
   def submitWouldYouLikeToAddAnotherContact(answer: String): HttpRequestBuilder =
     http("Submit add another contact: " + answer)
       .post(wouldYouLikeToAddAnotherContactUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", answer)
       .check(status.is(303))
 
@@ -272,7 +272,7 @@ object RegistrationRequests extends Configuration {
   def submitSecondContactPersonName(contactName: String): HttpRequestBuilder =
     http("Submit second contact person's Name: " + contactName)
       .post(secondContactPersonNameUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", contactName)
       .check(status.is(303))
 
@@ -285,7 +285,7 @@ object RegistrationRequests extends Configuration {
   def submitSecondContactPersonRole(contactRole: String): HttpRequestBuilder =
     http("Submit second contact person's Role: " + contactRole)
       .post(secondContactPersonRoleUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", contactRole)
       .check(status.is(303))
 
@@ -298,7 +298,7 @@ object RegistrationRequests extends Configuration {
   def submitSecondContactPersonEmail(emailAddress: String): HttpRequestBuilder =
     http("Submit second contact person's Email address: " + emailAddress)
       .post(secondContactPersonEmailUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", emailAddress)
       .check(status.is(303))
 
@@ -311,7 +311,7 @@ object RegistrationRequests extends Configuration {
   def submitSecondContactPersonTelephone(contactNumber: String): HttpRequestBuilder =
     http("Submit second contact person's Telephone: " + contactNumber)
       .post(secondContactPersonTelephoneUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", contactNumber)
       .check(status.is(303))
 
@@ -324,7 +324,7 @@ object RegistrationRequests extends Configuration {
   def submitRegisteredContactAddress(answer: String): HttpRequestBuilder =
     http("Submit registered contact address: " + answer)
       .post(registeredContactAddressUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", answer)
       .check(status.is(303))
 

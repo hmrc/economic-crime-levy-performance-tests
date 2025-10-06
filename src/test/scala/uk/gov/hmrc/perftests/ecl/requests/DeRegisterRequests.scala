@@ -48,7 +48,7 @@ object DeRegisterRequests extends Configuration {
   def submitReasonForDeregister(reason: String): HttpRequestBuilder =
     http("Submit reason for Deregister: " + reason)
       .post(deregisterReasonUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", reason)
       .check(status.is(303))
 
@@ -61,7 +61,7 @@ object DeRegisterRequests extends Configuration {
   def submitDeregisterDateForNoLongerLiable(day: String, month: String, year: String): HttpRequestBuilder =
     http("Submit Deregister date: ")
       .post(dateNoLongerLiableForEclUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value.day", day)
       .formParam("value.month", month)
       .formParam("value.year", year)
@@ -76,7 +76,7 @@ object DeRegisterRequests extends Configuration {
   def submitDeregisterContactName(contactName: String): HttpRequestBuilder =
     http("Submit deregister contact person's Name: " + contactName)
       .post(deregisterContactNameUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", contactName)
       .check(status.is(303))
 
@@ -89,7 +89,7 @@ object DeRegisterRequests extends Configuration {
   def submitDeregisterContactRole(contactRole: String): HttpRequestBuilder =
     http("Submit deregister contact person's Role: " + contactRole)
       .post(deregisterContactRoleUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", contactRole)
       .check(status.is(303))
 
@@ -102,7 +102,7 @@ object DeRegisterRequests extends Configuration {
   def submitDeregisterContactEmail(emailAddress: String): HttpRequestBuilder =
     http("Submit deregister contact person's Email address: " + emailAddress)
       .post(deregisterContactEmailUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", emailAddress)
       .check(status.is(303))
 
@@ -115,7 +115,7 @@ object DeRegisterRequests extends Configuration {
   def submitDeregisterContactTelephone(contactNumber: String): HttpRequestBuilder =
     http("Submit deregister contact person's Telephone: " + contactNumber)
       .post(deregisterContactTelephoneUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", contactNumber)
       .check(status.is(303))
 
@@ -128,7 +128,7 @@ object DeRegisterRequests extends Configuration {
   def submitDeregisterCheckYourAnswers(): HttpRequestBuilder =
     http("Submit check your answers")
       .post(deregisterCheckYourAnswersUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .check(status.is(303))
 
   val navigateToDeRegistrationRequestSubmitted: HttpRequestBuilder =

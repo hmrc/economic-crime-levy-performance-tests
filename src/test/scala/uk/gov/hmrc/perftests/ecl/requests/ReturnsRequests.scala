@@ -53,7 +53,7 @@ object ReturnsRequests extends Configuration {
   def submitIsYourRelevantAccountingPeriod12Months(answer: String): HttpRequestBuilder =
     http("Is UK Revenue for the relevant accounting period 12 months: " + answer)
       .post(isRelevantAccountingPeriod12MonthsUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", answer)
       .check(status.is(303))
 
@@ -66,7 +66,7 @@ object ReturnsRequests extends Configuration {
   def submitUkRevenueForTheRelevantAccountingPeriod(ukRevenue: String): HttpRequestBuilder =
     http("Is UK Revenue for the relevant accounting period: " + ukRevenue)
       .post(ukRevenueInAccountingPeriodUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", ukRevenue)
       .check(status.is(303))
 
@@ -78,7 +78,7 @@ object ReturnsRequests extends Configuration {
   def submitAmlRegulatedActivity(answer: String): HttpRequestBuilder =
     http("Did you carry out AML-regulated activity for the full financial year?: " + answer)
       .post(amlRegulatedActivityUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", answer)
       .check(status.is(303))
 
@@ -91,7 +91,7 @@ object ReturnsRequests extends Configuration {
   def submitAmountDue(): HttpRequestBuilder =
     http("Amount Due ")
       .post(amountDueUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .check(status.is(303))
 
   val navigateToContactName: HttpRequestBuilder =
@@ -103,7 +103,7 @@ object ReturnsRequests extends Configuration {
   def submitContactName(contactName: String): HttpRequestBuilder =
     http("Contact Name: " + contactName)
       .post(contactNameUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", contactName)
       .check(status.is(303))
 
@@ -116,7 +116,7 @@ object ReturnsRequests extends Configuration {
   def submitContactRole(contactRole: String): HttpRequestBuilder =
     http("Contact Role: " + contactRole)
       .post(contactRoleUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", contactRole)
       .check(status.is(303))
 
@@ -129,7 +129,7 @@ object ReturnsRequests extends Configuration {
   def submitContactEmailAddress(contactEmail: String): HttpRequestBuilder =
     http("Contact Email: " + contactEmail)
       .post(contactEmailUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", contactEmail)
       .check(status.is(303))
 
@@ -142,14 +142,14 @@ object ReturnsRequests extends Configuration {
   def submitContactTelephone(contactTelephone: String): HttpRequestBuilder =
     http("Contact Number: " + contactTelephone)
       .post(contactTelephoneUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", contactTelephone)
       .check(status.is(303))
 
   def submitCheckYourAnswersForReturns(): HttpRequestBuilder =
     http("Check Your Answers")
       .post(checkYourAnswersUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .check(status.is(303))
 
   val navigateToReturnSubmitted: HttpRequestBuilder =
