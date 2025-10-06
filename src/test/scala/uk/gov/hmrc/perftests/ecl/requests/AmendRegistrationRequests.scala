@@ -49,7 +49,7 @@ object AmendRegistrationRequests extends Configuration {
   def submitReasonForAmendRegistration(reason: String): HttpRequestBuilder =
     http("Submit reason for amend registration: " + reason)
       .post(reasonForAmendRegistrationUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", reason)
       .check(status.is(303))
 
@@ -62,7 +62,7 @@ object AmendRegistrationRequests extends Configuration {
   def submitAmendCheckYourAnswers(): HttpRequestBuilder =
     http("Amend Submit check your answers")
       .post(checkYourAnswersForAmendRegistrationUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .check(status.is(303))
 
   val navigateToChangeContactNameForRegistration: HttpRequestBuilder =
@@ -74,7 +74,7 @@ object AmendRegistrationRequests extends Configuration {
   def submitChangeContactNameForRegistration(changeContactName: String): HttpRequestBuilder =
     http("Change contact name for registration: " + changeContactName)
       .post(changeRegistrationContactNameUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", changeContactName)
       .check(status.is(303))
 

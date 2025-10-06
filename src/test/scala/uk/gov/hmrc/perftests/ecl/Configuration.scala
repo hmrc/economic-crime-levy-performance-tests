@@ -34,7 +34,7 @@ trait Configuration extends ServicesConfiguration {
 
   private val grsJourneyIdPattern: String = """.*journeyId=(.*)"""
 
-  def saveCsrfToken: CheckBuilder[CssCheckType, NodeSelector, String] = css("input[name='csrfToken']", "value").optional.saveAs("csrfToken")
+  def saveCsrfToken: CheckBuilder[CssCheckType, NodeSelector] = css("input[name='csrfToken']", "value").optional.saveAs("csrfToken")
 
   def saveGrsJourneyId: HttpCheck =
     headerRegex("location", grsJourneyIdPattern).saveAs("grsJourneyId")

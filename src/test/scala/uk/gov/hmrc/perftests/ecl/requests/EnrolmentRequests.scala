@@ -36,7 +36,7 @@ object EnrolmentRequests extends Configuration {
   def submitDoYouHaveAnEclReferenceNumber(answer: String): HttpRequestBuilder =
     http("Do you have ECL reference number: " + answer)
       .post(enrolmentAuthWizardUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", answer)
       .check(status.is(303))
 
@@ -49,7 +49,7 @@ object EnrolmentRequests extends Configuration {
   def submitYourEclReferenceNumber(eclReferenceNumber: String): HttpRequestBuilder =
     http("Your ECL reference number: " + eclReferenceNumber)
       .post(yourEclReferenceNumberUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", eclReferenceNumber)
       .check(status.is(303))
 
@@ -66,7 +66,7 @@ object EnrolmentRequests extends Configuration {
   ): HttpRequestBuilder =
     http("Your ECL registration date: " + eclRegistrationDate + "/" + eclRegistrationMonth + "/" + eclRegistrationYear)
       .post(yourEclRegistrationDateUrl)
-      .formParam("csrfToken", "${csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}")
       .formParam("value.day", eclRegistrationDate)
       .formParam("value.month", eclRegistrationMonth)
       .formParam("value.year", eclRegistrationYear)
