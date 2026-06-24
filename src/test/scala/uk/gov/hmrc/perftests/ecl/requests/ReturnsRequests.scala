@@ -21,6 +21,7 @@ import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.perftests.ecl.Configuration
 import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
+import io.gatling.core.session.el._
 
 object ReturnsRequests extends Configuration {
 
@@ -53,8 +54,8 @@ object ReturnsRequests extends Configuration {
   def submitIsYourRelevantAccountingPeriod12Months(answer: String): HttpRequestBuilder =
     http("Is UK Revenue for the relevant accounting period 12 months: " + answer)
       .post(isRelevantAccountingPeriod12MonthsUrl)
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", answer)
+      .formParam("csrfToken", "#{csrfToken}".el[String])
+      .formParam("value", answer.el[String])
       .check(status.is(303))
 
   val navigateToUkRevenueAccountingPeriod: HttpRequestBuilder =
@@ -66,8 +67,8 @@ object ReturnsRequests extends Configuration {
   def submitUkRevenueForTheRelevantAccountingPeriod(ukRevenue: String): HttpRequestBuilder =
     http("Is UK Revenue for the relevant accounting period: " + ukRevenue)
       .post(ukRevenueInAccountingPeriodUrl)
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", ukRevenue)
+      .formParam("csrfToken", "#{csrfToken}".el[String])
+      .formParam("value", ukRevenue.el[String])
       .check(status.is(303))
 
   val navigateToAmlRegulatedActivity: HttpRequestBuilder             =
@@ -78,8 +79,8 @@ object ReturnsRequests extends Configuration {
   def submitAmlRegulatedActivity(answer: String): HttpRequestBuilder =
     http("Did you carry out AML-regulated activity for the full financial year?: " + answer)
       .post(amlRegulatedActivityUrl)
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", answer)
+      .formParam("csrfToken", "#{csrfToken}".el[String])
+      .formParam("value", answer.el[String])
       .check(status.is(303))
 
   val navigateToAmountDue: HttpRequestBuilder =
@@ -91,7 +92,7 @@ object ReturnsRequests extends Configuration {
   def submitAmountDue(): HttpRequestBuilder =
     http("Amount Due ")
       .post(amountDueUrl)
-      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}".el[String])
       .check(status.is(303))
 
   val navigateToContactName: HttpRequestBuilder =
@@ -103,8 +104,8 @@ object ReturnsRequests extends Configuration {
   def submitContactName(contactName: String): HttpRequestBuilder =
     http("Contact Name: " + contactName)
       .post(contactNameUrl)
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", contactName)
+      .formParam("csrfToken", "#{csrfToken}".el[String])
+      .formParam("value", contactName.el[String])
       .check(status.is(303))
 
   val navigateToContactRole: HttpRequestBuilder =
@@ -116,8 +117,8 @@ object ReturnsRequests extends Configuration {
   def submitContactRole(contactRole: String): HttpRequestBuilder =
     http("Contact Role: " + contactRole)
       .post(contactRoleUrl)
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", contactRole)
+      .formParam("csrfToken", "#{csrfToken}".el[String])
+      .formParam("value", contactRole.el[String])
       .check(status.is(303))
 
   val navigateToContactEmailAddress: HttpRequestBuilder =
@@ -129,8 +130,8 @@ object ReturnsRequests extends Configuration {
   def submitContactEmailAddress(contactEmail: String): HttpRequestBuilder =
     http("Contact Email: " + contactEmail)
       .post(contactEmailUrl)
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", contactEmail)
+      .formParam("csrfToken", "#{csrfToken}".el[String])
+      .formParam("value", contactEmail.el[String])
       .check(status.is(303))
 
   val navigateToContactTelephone: HttpRequestBuilder =
@@ -142,14 +143,14 @@ object ReturnsRequests extends Configuration {
   def submitContactTelephone(contactTelephone: String): HttpRequestBuilder =
     http("Contact Number: " + contactTelephone)
       .post(contactTelephoneUrl)
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", contactTelephone)
+      .formParam("csrfToken", "#{csrfToken}".el[String])
+      .formParam("value", contactTelephone.el[String])
       .check(status.is(303))
 
   def submitCheckYourAnswersForReturns(): HttpRequestBuilder =
     http("Check Your Answers")
       .post(checkYourAnswersUrl)
-      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}".el[String])
       .check(status.is(303))
 
   val navigateToReturnSubmitted: HttpRequestBuilder =

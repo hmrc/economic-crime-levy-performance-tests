@@ -21,14 +21,18 @@ import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.perftests.ecl.Configuration
 import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
+import io.gatling.core.session.el._
 
 object AmendRegistrationRequests extends Configuration {
 
-  val amendEclRegistrationUrl: String                     = s"$registerAuthWizardUrl/amend-economic-crime-levy-registration/XMECL0000000002"
-  val amendRegistrationSubmittedUrl: String               = s"$registerAuthWizardUrl/amend-economic-crime-levy-registration/success/confirmation"
-  val reasonForAmendRegistrationUrl: String               = s"$registerAuthWizardUrl/change-answer/why-are-you-amending-your-registration"
-  val checkYourAnswersForAmendRegistrationUrl: String     = s"$registerAuthWizardUrl/check-your-answers?registrationType=Amendment"
-  val changeRegistrationContactNameUrl: String                        = s"$registerAuthWizardUrl/change-answer/contact-name"
+  val amendEclRegistrationUrl: String                 = s"$registerAuthWizardUrl/amend-economic-crime-levy-registration/XMECL0000000002"
+  val amendRegistrationSubmittedUrl: String           =
+    s"$registerAuthWizardUrl/amend-economic-crime-levy-registration/success/confirmation"
+  val reasonForAmendRegistrationUrl: String           =
+    s"$registerAuthWizardUrl/change-answer/why-are-you-amending-your-registration"
+  val checkYourAnswersForAmendRegistrationUrl: String =
+    s"$registerAuthWizardUrl/check-your-answers?registrationType=Amendment"
+  val changeRegistrationContactNameUrl: String        = s"$registerAuthWizardUrl/change-answer/contact-name"
 
   val navigateToEclAccount: HttpRequestBuilder =
     http(s"Navigate to /amend-economic-crime-levy-registration/XMECL0000000002")
@@ -49,8 +53,8 @@ object AmendRegistrationRequests extends Configuration {
   def submitReasonForAmendRegistration(reason: String): HttpRequestBuilder =
     http("Submit reason for amend registration: " + reason)
       .post(reasonForAmendRegistrationUrl)
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", reason)
+      .formParam("csrfToken", "#{csrfToken}".el[String])
+      .formParam("value", reason.el[String])
       .check(status.is(303))
 
   val navigateToAmendSubmitCheckYourAnswers: HttpRequestBuilder =
@@ -62,7 +66,7 @@ object AmendRegistrationRequests extends Configuration {
   def submitAmendCheckYourAnswers(): HttpRequestBuilder =
     http("Amend Submit check your answers")
       .post(checkYourAnswersForAmendRegistrationUrl)
-      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}".el[String])
       .check(status.is(303))
 
   val navigateToChangeContactNameForRegistration: HttpRequestBuilder =
@@ -74,8 +78,8 @@ object AmendRegistrationRequests extends Configuration {
   def submitChangeContactNameForRegistration(changeContactName: String): HttpRequestBuilder =
     http("Change contact name for registration: " + changeContactName)
       .post(changeRegistrationContactNameUrl)
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", changeContactName)
+      .formParam("csrfToken", "#{csrfToken}".el[String])
+      .formParam("value", changeContactName.el[String])
       .check(status.is(303))
 
   val navigateToAmendRegistrationSubmitted: HttpRequestBuilder =

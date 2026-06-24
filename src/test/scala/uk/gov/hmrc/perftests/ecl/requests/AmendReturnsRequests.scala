@@ -21,6 +21,7 @@ import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.perftests.ecl.Configuration
 import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
+import io.gatling.core.session.el._
 
 object AmendReturnsRequests extends Configuration {
 
@@ -43,14 +44,14 @@ object AmendReturnsRequests extends Configuration {
   def submitReasonForAmendReturns(reason: String): HttpRequestBuilder =
     http("Submit reason for amend registration: " + reason)
       .post(reasonForAmendReturnUrl)
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", reason)
+      .formParam("csrfToken", "#{csrfToken}".el[String])
+      .formParam("value", reason.el[String])
       .check(status.is(303))
 
   def submitAmendCheckYourAnswersForReturns(): HttpRequestBuilder =
     http("Amend Check Your Answers")
       .post(ReturnsRequests.checkYourAnswersUrl)
-      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}".el[String])
       .check(status.is(303))
 
   val navigateToChangeContactName: HttpRequestBuilder =
@@ -62,8 +63,8 @@ object AmendReturnsRequests extends Configuration {
   def submitChangeContactName(changeContactName: String): HttpRequestBuilder =
     http("Change Contact Name: " + changeContactName)
       .post(changeContactNameUrl)
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", changeContactName)
+      .formParam("csrfToken", "#{csrfToken}".el[String])
+      .formParam("value", changeContactName.el[String])
       .check(status.is(303))
 
   val navigateToAmendReturnSubmitted: HttpRequestBuilder =

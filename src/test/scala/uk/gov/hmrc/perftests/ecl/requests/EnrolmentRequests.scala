@@ -21,6 +21,7 @@ import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.perftests.ecl.Configuration
 import uk.gov.hmrc.perftests.ecl.requests.AuthRequests.enrolmentAuthWizardUrl
+import io.gatling.core.session.el._
 
 object EnrolmentRequests extends Configuration {
 
@@ -36,8 +37,8 @@ object EnrolmentRequests extends Configuration {
   def submitDoYouHaveAnEclReferenceNumber(answer: String): HttpRequestBuilder =
     http("Do you have ECL reference number: " + answer)
       .post(enrolmentAuthWizardUrl)
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", answer)
+      .formParam("csrfToken", "#{csrfToken}".el[String])
+      .formParam("value", answer.el[String])
       .check(status.is(303))
 
   val navigateToYourEclReferenceNumber: HttpRequestBuilder =
@@ -49,8 +50,8 @@ object EnrolmentRequests extends Configuration {
   def submitYourEclReferenceNumber(eclReferenceNumber: String): HttpRequestBuilder =
     http("Your ECL reference number: " + eclReferenceNumber)
       .post(yourEclReferenceNumberUrl)
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", eclReferenceNumber)
+      .formParam("csrfToken", "#{csrfToken}".el[String])
+      .formParam("value", eclReferenceNumber.el[String])
       .check(status.is(303))
 
   val navigateToEclRegistrationDate: HttpRequestBuilder =
@@ -66,9 +67,9 @@ object EnrolmentRequests extends Configuration {
   ): HttpRequestBuilder =
     http("Your ECL registration date: " + eclRegistrationDate + "/" + eclRegistrationMonth + "/" + eclRegistrationYear)
       .post(yourEclRegistrationDateUrl)
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value.day", eclRegistrationDate)
-      .formParam("value.month", eclRegistrationMonth)
-      .formParam("value.year", eclRegistrationYear)
+      .formParam("csrfToken", "#{csrfToken}".el[String])
+      .formParam("value.day", eclRegistrationDate.el[String])
+      .formParam("value.month", eclRegistrationMonth.el[String])
+      .formParam("value.year", eclRegistrationYear.el[String])
       .check(status.is(303))
 }
