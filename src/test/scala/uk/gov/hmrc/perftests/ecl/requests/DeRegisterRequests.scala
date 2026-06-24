@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,18 +21,19 @@ import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.perftests.ecl.Configuration
 import uk.gov.hmrc.perftests.ecl.requests.AuthRequests._
+import io.gatling.core.session.el._
 
 object DeRegisterRequests extends Configuration {
 
-  val requestToDeregisterUrl: String          = s"$registerAuthWizardUrl/deregister-start"
-  val deregisterReasonUrl: String             = s"$registerAuthWizardUrl/deregister-reason"
-  val dateNoLongerLiableForEclUrl: String     = s"$registerAuthWizardUrl/deregister-date-no-longer-liable"
-  val deregisterContactNameUrl: String        = s"$registerAuthWizardUrl/deregister-contact-name"
-  val deregisterContactRoleUrl: String        = s"$registerAuthWizardUrl/deregister-contact-role"
-  val deregisterContactEmailUrl: String       = s"$registerAuthWizardUrl/deregister-contact-email-address"
-  val deregisterContactTelephoneUrl: String   = s"$registerAuthWizardUrl/deregister-contact-telephone"
-  val deregisterCheckYourAnswersUrl: String   = s"$registerAuthWizardUrl/deregister-check-your-answers"
-  val deregisterSubmittedUrl: String          = s"$registerAuthWizardUrl/deregister-deregistration-requested"
+  val requestToDeregisterUrl: String        = s"$registerAuthWizardUrl/deregister-start"
+  val deregisterReasonUrl: String           = s"$registerAuthWizardUrl/deregister-reason"
+  val dateNoLongerLiableForEclUrl: String   = s"$registerAuthWizardUrl/deregister-date-no-longer-liable"
+  val deregisterContactNameUrl: String      = s"$registerAuthWizardUrl/deregister-contact-name"
+  val deregisterContactRoleUrl: String      = s"$registerAuthWizardUrl/deregister-contact-role"
+  val deregisterContactEmailUrl: String     = s"$registerAuthWizardUrl/deregister-contact-email-address"
+  val deregisterContactTelephoneUrl: String = s"$registerAuthWizardUrl/deregister-contact-telephone"
+  val deregisterCheckYourAnswersUrl: String = s"$registerAuthWizardUrl/deregister-check-your-answers"
+  val deregisterSubmittedUrl: String        = s"$registerAuthWizardUrl/deregister-deregistration-requested"
 
   val navigateToSubmitRequestToDeregister: HttpRequestBuilder =
     http(s"Navigate to /deregister-start")
@@ -48,8 +49,8 @@ object DeRegisterRequests extends Configuration {
   def submitReasonForDeregister(reason: String): HttpRequestBuilder =
     http("Submit reason for Deregister: " + reason)
       .post(deregisterReasonUrl)
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", reason)
+      .formParam("csrfToken", "#{csrfToken}".el[String])
+      .formParam("value", reason.el[String])
       .check(status.is(303))
 
   val navigateToDateNoLongerLiableForEcl: HttpRequestBuilder =
@@ -61,10 +62,10 @@ object DeRegisterRequests extends Configuration {
   def submitDeregisterDateForNoLongerLiable(day: String, month: String, year: String): HttpRequestBuilder =
     http("Submit Deregister date: ")
       .post(dateNoLongerLiableForEclUrl)
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value.day", day)
-      .formParam("value.month", month)
-      .formParam("value.year", year)
+      .formParam("csrfToken", "#{csrfToken}".el[String])
+      .formParam("value.day", day.el[String])
+      .formParam("value.month", month.el[String])
+      .formParam("value.year", year.el[String])
       .check(status.is(303))
 
   val navigateToDeregisterContactName: HttpRequestBuilder =
@@ -76,8 +77,8 @@ object DeRegisterRequests extends Configuration {
   def submitDeregisterContactName(contactName: String): HttpRequestBuilder =
     http("Submit deregister contact person's Name: " + contactName)
       .post(deregisterContactNameUrl)
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", contactName)
+      .formParam("csrfToken", "#{csrfToken}".el[String])
+      .formParam("value", contactName.el[String])
       .check(status.is(303))
 
   val navigateToDeregisterContactRole: HttpRequestBuilder =
@@ -89,8 +90,8 @@ object DeRegisterRequests extends Configuration {
   def submitDeregisterContactRole(contactRole: String): HttpRequestBuilder =
     http("Submit deregister contact person's Role: " + contactRole)
       .post(deregisterContactRoleUrl)
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", contactRole)
+      .formParam("csrfToken", "#{csrfToken}".el[String])
+      .formParam("value", contactRole.el[String])
       .check(status.is(303))
 
   val navigateToDeregisterContactEmail: HttpRequestBuilder =
@@ -102,8 +103,8 @@ object DeRegisterRequests extends Configuration {
   def submitDeregisterContactEmail(emailAddress: String): HttpRequestBuilder =
     http("Submit deregister contact person's Email address: " + emailAddress)
       .post(deregisterContactEmailUrl)
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", emailAddress)
+      .formParam("csrfToken", "#{csrfToken}".el[String])
+      .formParam("value", emailAddress.el[String])
       .check(status.is(303))
 
   val navigateToDeregisterContactTelephone: HttpRequestBuilder =
@@ -115,8 +116,8 @@ object DeRegisterRequests extends Configuration {
   def submitDeregisterContactTelephone(contactNumber: String): HttpRequestBuilder =
     http("Submit deregister contact person's Telephone: " + contactNumber)
       .post(deregisterContactTelephoneUrl)
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", contactNumber)
+      .formParam("csrfToken", "#{csrfToken}".el[String])
+      .formParam("value", contactNumber.el[String])
       .check(status.is(303))
 
   val navigateToDeregisterSubmitCheckYourAnswers: HttpRequestBuilder =
@@ -128,7 +129,7 @@ object DeRegisterRequests extends Configuration {
   def submitDeregisterCheckYourAnswers(): HttpRequestBuilder =
     http("Submit check your answers")
       .post(deregisterCheckYourAnswersUrl)
-      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("csrfToken", "#{csrfToken}".el[String])
       .check(status.is(303))
 
   val navigateToDeRegistrationRequestSubmitted: HttpRequestBuilder =

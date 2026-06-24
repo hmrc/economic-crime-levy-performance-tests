@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import io.gatling.http.Predef._
 import io.gatling.http.check.HttpCheck
 import jodd.lagarto.dom.NodeSelector
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
+import io.gatling.core.session.el._
 
 trait Configuration extends ServicesConfiguration {
 
@@ -34,9 +35,10 @@ trait Configuration extends ServicesConfiguration {
 
   private val grsJourneyIdPattern: String = """.*journeyId=(.*)"""
 
-  def saveCsrfToken: CheckBuilder[CssCheckType, NodeSelector] = css("input[name='csrfToken']", "value").optional.saveAs("csrfToken")
+  def saveCsrfToken: CheckBuilder[CssCheckType, NodeSelector] =
+    css("input[name='csrfToken']", "value").optional.saveAs("csrfToken")
 
   def saveGrsJourneyId: HttpCheck =
-    headerRegex("location", grsJourneyIdPattern).saveAs("grsJourneyId")
+    headerRegex("location".el[String], grsJourneyIdPattern.el[String]).saveAs("grsJourneyId")
 
 }
